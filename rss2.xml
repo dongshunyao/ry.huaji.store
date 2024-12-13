@@ -15,7 +15,7 @@
     <atom:link href="https://ry.huaji.store/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>(✿╹◡╹) 相信的心就是你的魔法 (╹◡╹✿)</description>
-    <pubDate>Fri, 13 Dec 2024 15:04:27 GMT</pubDate>
+    <pubDate>Fri, 13 Dec 2024 15:49:43 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -45,7 +45,7 @@
       <guid>https://ry.huaji.store/2024/11/ChiliChill-2024/</guid>
       <pubDate>Tue, 12 Nov 2024 12:29:36 GMT</pubDate>
       
-      <description>一场​痛并快乐着的 Live 演出，也借这个契机聊聊近况</description>
+      <description>一场痛并快乐着的 Live 演出，也借这个契机聊聊近况</description>
       
       
       
@@ -830,5 +830,9 @@
       
     </item>
     
+    <follow_challenge>
+      <feedId>90422073060264960</feedId>
+      <userId>69722014333191168</userId>
+    </follow_challenge>
   </channel>
 </rss>
