@@ -393,13 +393,6 @@
   </url>
   
   <url>
-    <loc>https://ry.huaji.store/tags/%E5%8A%A8%E7%94%BB/</loc>
-    <lastmod>2024-12-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://ry.huaji.store/tags/RIP/</loc>
     <lastmod>2024-12-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -407,7 +400,7 @@
   </url>
   
   <url>
-    <loc>https://ry.huaji.store/tags/%E5%A4%8F%E6%97%A5%E8%8A%B1%E7%81%AB/</loc>
+    <loc>https://ry.huaji.store/tags/%E5%8A%A8%E7%94%BB/</loc>
     <lastmod>2024-12-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -415,6 +408,13 @@
   
   <url>
     <loc>https://ry.huaji.store/tags/Some-Useful-Documents/</loc>
+    <lastmod>2024-12-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ry.huaji.store/tags/%E5%A4%8F%E6%97%A5%E8%8A%B1%E7%81%AB/</loc>
     <lastmod>2024-12-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
