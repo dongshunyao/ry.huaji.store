@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="垚"><title>没有桌面环境的 Linux 系统，却需要用浏览器打开网页，这要怎么破？ · 无存在感小透明</title><meta name="description" content="之前有遇到过这种问题，简单来说，平时用的 Linux 都是在服务器上面跑的，所以基本上都是通过 Shell 来进行交互的（至少我都是这么干的），既然是命令行，你想跑带 GUI 的程序肯定是没戏了QAQ
+我之所以会有这个想法，就是用 Linux 服务器的时候有时候需要看一些网页。十分朴素的办法就是用 "><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo.png" style="width:180px;"><h3 title=""><a href="/">无存在感小透明</a></h3><div class="description"><p>(✿╹◡╹) 相信的心就是你的魔法 (╹◡╹✿)</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-twitter"></i></a></li><li><a href="https://github.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-github"></i></a></li><li><a href="https://t.me/yao2333" target="_blank" rel="noopener"><i class="fa fa-telegram"></i></a></li><li><a href="mailto:dongshunyao@qq.com"><i class="fa fa-envelope"></i></a></li><li><a href="/rss2.xml"><i class="fa fa-rss"></i></a></li><li><a href="/atom.xml"><i class="fa fa-rss-square"></i></a></li></ul><div class="footer"><span>Time To</span><div class="by_farbox"><span>Mix Drink && Change Life</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">文章</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h2><a>没有桌面环境的 Linux 系统，却需要用浏览器打开网页，这要怎么破？</a></h2></div><div class="post-content"><p>之前有遇到过这种问题，简单来说，平时用的 Linux 都是在服务器上面跑的，所以基本上都是通过 Shell 来进行交互的（至少我都是这么干的），既然是命令行，你想跑带 GUI 的程序肯定是没戏了QAQ</p>
+<p>我之所以会有这个想法，就是用 Linux 服务器的时候有时候需要看一些网页。十分朴素的办法就是用 <code>wget</code> 把网页存下来，然后看网页文件。当然，效果也就那样。</p>
+<p>当然我也有在网络上查过这个问题的解决方法，不过说回来这个问题实在是不好描述。。。一番查找下来，一般就两个办法：</p>
+<p>一个是用 VNC ，用 VNC 的话你的 Linux 就得装个桌面环境，这对于一个服务器来说显然是不太划算的（主要是我服务器带不动） </p>
+<p>一个是用 X Server，不过一堆配置看着还挺复杂的，我也就没啥想法了。。。</p>
+<p><strong>最近用 MobaXterm 的时候，注意到右上角有一个 X server 的图标，就抱着试一试<del>（搞事）</del>的心态给手上的 Ubuntu 装了一个 Firefox ，运行，然后就跑起来了！！</strong></p>
+<p>这事还挺让我惊喜的，没想到这个问题就这么解决了。后来了解了一下，这是 X 协议第 11 个版本，也就是 <strong>X11</strong> 。</p>
+<p>而 X 协议由 X server 和 X client 组成。能实现这个功能主要是靠 <strong>X11-forwarding</strong> 来实现的。</p>
+<p>X11-forwarding 说白了就是用支持 X Server 的 SSH 客户端连接到 Linux ，然后你就可以在 SSH 客户端上操作远程 Linux上个有图形界面的程序啦~~</p>
+<p>如果你用的是 MobaXterm 的话，在登录之后就会显示当前连接是不是支持 X11-forwarding 的。</p>
+<p>对于 Ubuntu 用户来说，一般都是直接配置好的，我用的 <code>Ubuntu 18.04.4 LTS</code> 和 <code>Ubuntu 14.04.1 LTS</code> 都是直接就能用的。</p>
+<p>如果你显示了一把 × ，像这样：</p>
+<p><img src="/images/Linux-XServer/20200630170023.png" alt=""></p>
+<p>比如我的 <code>CentOS 7.6</code> ，说明你还得装点东西：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install xorg-x11-xauth xorg-x11-fonts-* xorg-x11-font-utils xorg-x11-fonts-Type1 xclock</span><br></pre></td></tr></table></figure>
+
+<p>然后确保你的 <code>/etc/ssh/sshd_config</code> 中的 <code>X11Forwarding</code> 后面是 yes 。不是的话改了之后记得重启一下 sshd 服务。</p>
+<p>重新连接，上面应该就绿了(x)，用时钟测试一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xclock</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Linux-XServer/20200630171050.png" alt=""></p>
+<p>最后我要安利一下 MobaXterm ，不仅支持 X11-forwarding，有一说一，确实好用，<a href="https://mobaxterm.mobatek.net/" target="_blank" rel="noopener">官网</a>的 Home Edition 基本能满足一切日常连接的需求，还有 Portable 版本可选，唯一的缺点就是下载速度太慢，得用一些魔法才行。</p>
+<p><del>PS：我之所以会一直用这个软件，是因为里面自带的游戏实在是太香了hhh</del></p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-07-21</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Linux/" title="Linux">Linux </a></div></div></div></div><div class="share"><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="https://twitter.com/intent/tweet?url=https://ry.huaji.store/2020/07/Linux-XServer/&amp;text=没有桌面环境的 Linux 系统，却需要用浏览器打开网页，这要怎么破？ · 无存在感小透明" target="_blank" rel="noopener"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2020/08/Linux-magic-network/" title="让你的 Linux 云服务器也能科学上网！">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020/06/JavaEE-04/" title="Java EE 04：一个基于 Springboot + Vue.js + Mybatis + MySQL + RestfulAPI + Docker 的简单作业管理系统">下一篇</a></li></ul></div><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><span class="leancloud_visitors" id="/2020/07/Linux-XServer/" data-flag-title="没有桌面环境的 Linux 系统，却需要用浏览器打开网页，这要怎么破？"></span><script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av-min.js"></script><script src="//cdn.jsdelivr.net/npm/valine@1.5.3/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  appId:'CV2PYOHXSB2oApmkqHGUKSzj-MdYXbMMI',
+  appKey:'RcyttO7brDSawuxt4FfSUtPM',
+  placeholder:'中国有句古话叫「闷声大发财」，但是见到你们这样热情，一句话不说也不好，你说是吧？',
+  avatar:'identicon',
+  visitor:'true',
+  recordIP:'true',
+  serverURLs:'https://valine.huaji.store',
+  meta:['nick','mail','link'],
+  requiredFields:['nick','mail']
+})
+
+</script></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>

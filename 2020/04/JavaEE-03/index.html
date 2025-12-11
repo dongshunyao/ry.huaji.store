@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="垚"><title>Java EE 03：Spring Web MVC 分析与流程 · 无存在感小透明</title><meta name="description" content="什么是 Spring Web MVCSpring Web MVC 是基于 Servlet API 构建的原始 Web 框架。Spring Web MVC 从最初就已经包含在 Spring 框架中。正式名称 Spring Web MVC 来自其源模块 (spring-webmvc) 的名称，但现在通常"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo.png" style="width:180px;"><h3 title=""><a href="/">无存在感小透明</a></h3><div class="description"><p>(✿╹◡╹) 相信的心就是你的魔法 (╹◡╹✿)</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-twitter"></i></a></li><li><a href="https://github.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-github"></i></a></li><li><a href="https://t.me/yao2333" target="_blank" rel="noopener"><i class="fa fa-telegram"></i></a></li><li><a href="mailto:dongshunyao@qq.com"><i class="fa fa-envelope"></i></a></li><li><a href="/rss2.xml"><i class="fa fa-rss"></i></a></li><li><a href="/atom.xml"><i class="fa fa-rss-square"></i></a></li></ul><div class="footer"><span>Time To</span><div class="by_farbox"><span>Mix Drink && Change Life</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">文章</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h2><a>Java EE 03：Spring Web MVC 分析与流程</a></h2></div><div class="post-content"><h3 id="什么是-Spring-Web-MVC"><a href="#什么是-Spring-Web-MVC" class="headerlink" title="什么是 Spring Web MVC"></a>什么是 Spring Web MVC</h3><p>Spring Web MVC 是基于 Servlet API 构建的原始 Web 框架。Spring Web MVC 从最初就已经包含在 Spring 框架中。正式名称 <strong>Spring Web MVC</strong> 来自其源模块 (<strong>spring-webmvc</strong>) 的名称，但现在通常被称为 <strong>Spring MVC</strong>，下文也采用这个简写。</p>
+<p>和许多的 Web 框架一样，Spring MVC 是围绕着一个前端控制器模式进行设计的。这里围绕着一个 <code>Servlet</code>，它被称为 <code>DispatcherServlet</code>。这里提供了用于处理请求的的共享算法，而实际的工作是由配置的委托组件去执行的。这种模型非常灵活，并支持多种工作流程。</p>
+<p>下面将从 Serlvet 注册、IoC 容器创建、Bean 初始化、MVC 的流程这几个方面进行阐述。</p>
+<hr>
+<h3 id="Serlvet-注册"><a href="#Serlvet-注册" class="headerlink" title="Serlvet 注册"></a>Serlvet 注册</h3><p>Spring MVC 所依赖的 <code>DispatcherServlet</code> 和普通的 Servlet 一样，需要我们通过 Java 代码或者 <code>web.xml</code>文件进行配置。同时 <code>DispatcherServlet</code> 使用 Spring 的配置文件来发现它所需要进行处理程序映射、视图解析、异常处理等工作的委托组件。</p>
+<p><img src="/images/JavaEE-03/20200415130926.png" alt=""></p>
+<p>官方为我们展示了两种注册 <code>DispatcherServlet</code> 的方式：</p>
+<blockquote>
+<p>Java 代码（当然你也可以使用 Kotlin，这里就不赘述了）</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyWebApplicationInitializer</span> <span class="keyword">implements</span> <span class="title">WebApplicationInitializer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStartup</span><span class="params">(ServletContext servletCxt)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Load Spring web application configuration</span></span><br><span class="line">        AnnotationConfigWebApplicationContext ac = <span class="keyword">new</span> AnnotationConfigWebApplicationContext();</span><br><span class="line">        ac.register(AppConfig<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        ac.refresh();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Create and register the DispatcherServlet</span></span><br><span class="line">        DispatcherServlet servlet = <span class="keyword">new</span> DispatcherServlet(ac);</span><br><span class="line">        ServletRegistration.Dynamic registration = servletCxt.addServlet(<span class="string">"app"</span>, servlet);</span><br><span class="line">        registration.setLoadOnStartup(<span class="number">1</span>);</span><br><span class="line">        registration.addMapping(<span class="string">"/app/*"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>web.xml 文件</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">web-app</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">context-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>/WEB-INF/app-context.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>app<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span><span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>app<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/app/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>有一个这里的小细节，上面的 XML 文件中出现了两个文件路径。</p>
+<p>这里的 <code>&lt;context-param&gt;</code> 中的 <code>&lt;param-value&gt;</code> 是对整个 application 的上下文参数。这个是配置在 Web 下面的，Spring 框架在加载配置文件的时候，加载的是 <code>&lt;context-param&gt;</code> 配置文件的内容。</p>
+<p>而 <code>&lt;init-param&gt;</code> 中的 <code>&lt;param-value&gt;</code> 是对 <code>DispatcherServlet</code> 的上下文参数，只有初始化了这个 Servlet，才会加载 <code>&lt;init-param&gt;</code> 中的配置文件。</p>
+<hr>
+<h3 id="IoC-容器创建"><a href="#IoC-容器创建" class="headerlink" title="IoC 容器创建"></a>IoC 容器创建</h3><h4 id="什么是-IoC"><a href="#什么是-IoC" class="headerlink" title="什么是 IoC"></a>什么是 IoC</h4><p>IoC 是 Inversion of Control 的缩写，现在通常被翻译为<strong>控制反转</strong>。</p>
+<p>Ioc 是面向对象编程中的一个重要的设计思想。简单来说，IoC 就是<strong>将你设计好了的对象交给对应的 IoC 进行控制，而不是传统的在你直接控制对象</strong>。</p>
+<p>既然是控制反转，下面就来说说这控制和反转：</p>
+<p>传统面向程序设计，我们直接通过 new 创建对象，是程序主动去创建依赖对象。IoC 则是有一个专门的容器来创建这些对象，即 IoC 容器来控制对象的创建，主要控制了外部资源获取。</p>
+<p>有反就有正，传统面向程序设计是由我们自己在对象中主动获取依赖对象，也就是正转。而反转则是由容器来帮忙创建及注入依赖对象：容器帮我们查找及注入依赖对象，对象只是被动的接受依赖对象，所以是反转。</p>
+<p><img src="/images/JavaEE-03/20200415120635.png" alt=""></p>
+<h4 id="Spring-中的-IoC-容器"><a href="#Spring-中的-IoC-容器" class="headerlink" title="Spring 中的 IoC 容器"></a>Spring 中的 IoC 容器</h4><p>Spring中提供了两种 IoC 容器： <code>BeanFactory</code> 和 <code>ApplicationContext</code>。</p>
+<p>其中 <code>ApplicationContext</code> 是 <code>BeanFactory</code> 的子类，<code>ApplicationContext</code> 是基于 <code>BeanFactory</code> 构建的，功能更强大，下面讲述均为 <code>ApplicationContext</code> 。</p>
+<p>在 Spring MVC 中，IoC 容器为 <code>ApplicationContext</code> 接口。它负责实例化并配置和装配需要托管的对象。容器通过读取配置文件或者代码获取托管对象的描述信息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.context;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.HierarchicalBeanFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.ListableBeanFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.config.AutowireCapableBeanFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.env.EnvironmentCapable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.support.ResourcePatternResolver;</span><br><span class="line"><span class="keyword">import</span> org.springframework.lang.Nullable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ApplicationContext</span> <span class="keyword">extends</span> <span class="title">EnvironmentCapable</span>, <span class="title">ListableBeanFactory</span>, <span class="title">HierarchicalBeanFactory</span>, <span class="title">MessageSource</span>, <span class="title">ApplicationEventPublisher</span>, <span class="title">ResourcePatternResolver</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="function">String <span class="title">getId</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">getApplicationName</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">getDisplayName</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">getStartupDate</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="function">ApplicationContext <span class="title">getParent</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">AutowireCapableBeanFactory <span class="title">getAutowireCapableBeanFactory</span><span class="params">()</span> <span class="keyword">throws</span> IllegalStateException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>容器的创建也提供了两种方法：</p>
+<blockquote>
+<p>Java 代码</p>
+</blockquote>
+<p>对于 <code>ApplicationContext</code> 接口，Spring 提供了 <code>ClassPathXmlApplicationContext</code> 或 <code>FileSystemXmlApplicationContext</code> 的实现类来创建你的 IoC 容器。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"test.xml"</span>);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>WebApplicationContext</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 Spring 中，配置好了监听器，在启动时会创建一个 <code>WebApplicationContext</code>，Spring 初始化的过程中会调用 <code>ContextLoader</code>中的 <code>initWebApplicationContext()</code> 方法生成一个 <code>WebApplicationContext</code>。</p>
+<hr>
+<h3 id="Bean-初始化"><a href="#Bean-初始化" class="headerlink" title="Bean 初始化"></a>Bean 初始化</h3><h4 id="Bean-的定义"><a href="#Bean-的定义" class="headerlink" title="Bean 的定义"></a>Bean 的定义</h4><p>在 Spring 中，Bean 是 IoC 容器管理的对象。在 Spring 中，一旦把一个 Bean 放入到 IoC容器之中，这个 Bean 的生命周期就会交给容器进行管理。</p>
+<p>一个 Bean 的信息由他的<strong>元数据</strong>进行表示，下面展示了这些元数据：</p>
+<table>
+<thead>
+<tr>
+<th align="center">属性</th>
+<th></th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Class</td>
+<td></td>
+<td align="center">指定用来创建 Bean 的类</td>
+</tr>
+<tr>
+<td align="center">Name</td>
+<td></td>
+<td align="center">指定唯一的标识符</td>
+</tr>
+<tr>
+<td align="center">Scope</td>
+<td></td>
+<td align="center">指定创建的对象的作用域</td>
+</tr>
+<tr>
+<td align="center">Constructor arguments</td>
+<td></td>
+<td align="center">它是用来注入依赖关系的</td>
+</tr>
+<tr>
+<td align="center">Properties</td>
+<td></td>
+<td align="center">用于依赖注入关系</td>
+</tr>
+<tr>
+<td align="center">Autowiring mode</td>
+<td></td>
+<td align="center">用于自动装配协作的 Bean</td>
+</tr>
+<tr>
+<td align="center">Lazy initialization mode</td>
+<td></td>
+<td align="center">延迟初始化，第一次被请求时才创建实例</td>
+</tr>
+<tr>
+<td align="center">Initialization method</td>
+<td></td>
+<td align="center">所有必需的属性被设置后，调用回调方法</td>
+</tr>
+<tr>
+<td align="center">Destruction method</td>
+<td></td>
+<td align="center">当容器被销毁时，使用回调方法</td>
+</tr>
+</tbody></table>
+<h4 id="Bean-的作用域"><a href="#Bean-的作用域" class="headerlink" title="Bean 的作用域"></a>Bean 的作用域</h4><p>定义 Bean 的时候，你需要设置这个 Bean 的作用域，没有设置的话默认值为  <strong>singleton</strong>。</p>
+<p>这里可以参考设计模式，常用的作用域为 <strong>prototype</strong> 和 <strong>singleton</strong>，前者为原型模式，后者为单例模式。</p>
+<p>Spring 框架支持以下作用域：</p>
+<ul>
+<li><p>singleton</p>
+<p>该作用域将 Bean 限制在每一个 Spring IoC 容器中的一个单一实例。该单一实例将存储在高速缓存中，以及所有后续的请求和引用都返回缓存对象。</p>
+</li>
+<li><p>prototype</p>
+<p>该作用域将 Bean 限制在任意数量的对象实例。如果作用域设置为 prototype，那么每次发出请求时 Spring IoC 容器就创建对象的新的 Bean 实例。</p>
+</li>
+<li><p>request</p>
+<p>该作用域将 Bean 的定义限制为 HTTP 请求。只有在 web 应用中才会生效。</p>
+</li>
+<li><p>session</p>
+<p>该作用域将 Bean 的定义限制为 HTTP 请求。只有在 web 应用中才会生效。</p>
+</li>
+<li><p>application</p>
+<p>该作用域将 Bean 的定义限制为 ServletContext。只有在 web 应用中才会生效。</p>
+</li>
+<li><p>websocket</p>
+<p>该作用域将 Bean 的定义限制为 WebSocket。只有在 web 应用中才会生效。</p>
+</li>
+</ul>
+<h4 id="Bean-的生命周期"><a href="#Bean-的生命周期" class="headerlink" title="Bean 的生命周期"></a>Bean 的生命周期</h4><p>这里引用一张 《Spring 解密》中的图片，对 Bean 的生命周期进行简单概括，具体细节可以阅读这本书（它真的讲的比我好）。</p>
+<p><img src="/images/JavaEE-03/20200415130138.png" alt=""></p>
+<hr>
+<h3 id="MVC-的流程"><a href="#MVC-的流程" class="headerlink" title="MVC 的流程"></a>MVC 的流程</h3><ol>
+<li>用户向服务器发送请求，请求被 Spring 的前端控制器 Servelt DispatcherServlet 捕获。这里前端控制器不会自己进行处理，而是对请求进行分发。</li>
+<li>DispatcherServlet 对请求 URL 进行解析，得到请求资源标识符 URI。然后根据该URI，调用 <strong>HandlerMapping</strong> 获得该 Handler 配置的所有相关的对象（包括对象以及对应的拦截器），最后以 <strong>HandlerExecutionChain</strong> 对象的形式返回。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> HandlerExecutionChain <span class="title">getHandler</span><span class="params">(HttpServletRequest request)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Object handler = <span class="keyword">this</span>.getHandlerInternal(request);</span><br><span class="line">    <span class="keyword">if</span> (handler == <span class="keyword">null</span>) &#123;</span><br><span class="line">        handler = <span class="keyword">this</span>.getDefaultHandler();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (handler == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (handler <span class="keyword">instanceof</span> String) &#123;</span><br><span class="line">            String handlerName = (String)handler;</span><br><span class="line">            handler = <span class="keyword">this</span>.obtainApplicationContext().getBean(handlerName);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        HandlerExecutionChain executionChain = <span class="keyword">this</span>.getHandlerExecutionChain(handler, request);</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.logger.isTraceEnabled()) &#123;</span><br><span class="line">            <span class="keyword">this</span>.logger.trace(<span class="string">"Mapped to "</span> + handler);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.logger.isDebugEnabled() &amp;&amp; !request.getDispatcherType().equals(DispatcherType.ASYNC)) &#123;</span><br><span class="line">            <span class="keyword">this</span>.logger.debug(<span class="string">"Mapped to "</span> + executionChain.getHandler());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.hasCorsConfigurationSource(handler) || CorsUtils.isPreFlightRequest(request)) &#123;</span><br><span class="line">            CorsConfiguration config = <span class="keyword">this</span>.corsConfigurationSource != <span class="keyword">null</span> ? <span class="keyword">this</span>.corsConfigurationSource.getCorsConfiguration(request) : <span class="keyword">null</span>;</span><br><span class="line">            CorsConfiguration handlerConfig = <span class="keyword">this</span>.getCorsConfiguration(handler, request);</span><br><span class="line">            config = config != <span class="keyword">null</span> ? config.combine(handlerConfig) : handlerConfig;</span><br><span class="line">            executionChain = <span class="keyword">this</span>.getCorsHandlerExecutionChain(request, executionChain, config);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> executionChain;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>DispatcherServlet 根据获得的 Handler，选择一个合适的 <strong>HandlerAdapter</strong>。这里使用了设计模式中的适配器模式，能够更容易的支持多种类型的处理器。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> HandlerAdapter <span class="title">getHandlerAdapter</span><span class="params">(Object handler)</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.handlerAdapters != <span class="keyword">null</span>) &#123;</span><br><span class="line">        Iterator var2 = <span class="keyword">this</span>.handlerAdapters.iterator();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(var2.hasNext()) &#123;</span><br><span class="line">            HandlerAdapter adapter = (HandlerAdapter)var2.next();</span><br><span class="line">            <span class="keyword">if</span> (adapter.supports(handler)) &#123;</span><br><span class="line">                <span class="keyword">return</span> adapter;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> ServletException(<span class="string">"No adapter for handler ["</span> + handler + <span class="string">"]: The DispatcherServlet configuration needs to include a HandlerAdapter that supports this handler"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>HandlerAdapter 将会根据适配的结果调用真正的功能处理方法，完成功能处理。</li>
+<li>Handler 执行完成后，向 DispatcherServlet 返回一个 <strong>ModelAndView</strong> 对象然后调用拦截器的 postHandle 方法。</li>
+<li>根据返回的 ModelAndView，选择一个适合的 <strong>ViewResolver</strong>（必须是已经注册到 Spring 容器中的 ViewResolver）返回给 DispatcherServlet。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.web.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Locale;</span><br><span class="line"><span class="keyword">import</span> org.springframework.lang.Nullable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ViewResolver</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="function">View <span class="title">resolveViewName</span><span class="params">(String var1, Locale var2)</span> <span class="keyword">throws</span> Exception</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li><p>DispatcherServlet 将 ModelAndView 的逻辑视图名发送给 ViewResolver， ViewResolver 将把逻辑视图名解析为具体的 View。</p>
+</li>
+<li><p><strong>View</strong> 进行视图渲染，View 会根据传进来的 Model 模型数据进行渲染。</p>
+</li>
+<li><p>返回渲染后的结果。</p>
+</li>
+<li><p>执行拦截器的 <strong>afterCompletion</strong> 方法。</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.web.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> org.springframework.lang.Nullable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="11">
+<li>返回控制权给 <strong>DispatcherServlet</strong>，由 DispatcherServlet 返回响应，流程结束。</li>
+</ol>
+<hr>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>文章中的资料主要来自于 Spring 官网的文档，也参考了一些网络上的资料和书籍。</p>
+<p>感谢阅读，如果有什么错误和建议，欢迎与我联系！</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-04-14</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Java-EE/" title="Java EE">Java EE </a></div></div></div></div><div class="share"><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="https://twitter.com/intent/tweet?url=https://ry.huaji.store/2020/04/JavaEE-03/&amp;text=Java EE 03：Spring Web MVC 分析与流程 · 无存在感小透明" target="_blank" rel="noopener"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2020/04/Leetcode-LRU-LFU/" title="LRU 与 LFU 缓存算法">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020/04/Leetcode-edit-distance/" title="编辑距离">下一篇</a></li></ul></div><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><span class="leancloud_visitors" id="/2020/04/JavaEE-03/" data-flag-title="Java EE 03：Spring Web MVC 分析与流程"></span><script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av-min.js"></script><script src="//cdn.jsdelivr.net/npm/valine@1.5.3/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  appId:'CV2PYOHXSB2oApmkqHGUKSzj-MdYXbMMI',
+  appKey:'RcyttO7brDSawuxt4FfSUtPM',
+  placeholder:'中国有句古话叫「闷声大发财」，但是见到你们这样热情，一句话不说也不好，你说是吧？',
+  avatar:'identicon',
+  visitor:'true',
+  recordIP:'true',
+  serverURLs:'https://valine.huaji.store',
+  meta:['nick','mail','link'],
+  requiredFields:['nick','mail']
+})
+
+</script></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="垚"><title>让你的 Linux 云服务器也能科学上网！ · 无存在感小透明</title><meta name="description" content="注意：这篇文章不是教你怎么在云服务器上搭梯子本地翻墙，而是教你在没有 GUI 界面的 Linux 系统上使用梯子！
+之前遇到过一些 SB 需求，解决的唯一办法就是在 Linux 系统的云服务器用 Shadowsocks/V2ray/Clash 挂代理科学上网（GFW 真的很讨厌啊QAQ）。毕竟是云服"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo.png" style="width:180px;"><h3 title=""><a href="/">无存在感小透明</a></h3><div class="description"><p>(✿╹◡╹) 相信的心就是你的魔法 (╹◡╹✿)</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-twitter"></i></a></li><li><a href="https://github.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-github"></i></a></li><li><a href="https://t.me/yao2333" target="_blank" rel="noopener"><i class="fa fa-telegram"></i></a></li><li><a href="mailto:dongshunyao@qq.com"><i class="fa fa-envelope"></i></a></li><li><a href="/rss2.xml"><i class="fa fa-rss"></i></a></li><li><a href="/atom.xml"><i class="fa fa-rss-square"></i></a></li></ul><div class="footer"><span>Time To</span><div class="by_farbox"><span>Mix Drink && Change Life</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">文章</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h2><a>让你的 Linux 云服务器也能科学上网！</a></h2></div><div class="post-content"><p><strong>注意：这篇文章不是教你怎么在云服务器上搭梯子本地翻墙，而是教你在没有 GUI 界面的 Linux 系统上使用梯子！</strong></p>
+<p>之前遇到过一些 SB 需求，解决的唯一办法就是在 Linux 系统的云服务器用 Shadowsocks/V2ray/Clash 挂代理科学上网（GFW 真的很讨厌啊QAQ）。毕竟是云服务器，带 GUI 的梯子就不太好搞了（当然你可以参考我<a href="https://ry.huaji.store/2020/07/Linux-XServer">之前的文章</a>用 XServer 运行有 GUI 的科学上网软件）。这篇文章讲的就是在 Linux 上以命令行的方式科学上网</p>
+<p>下面的教程将分别介绍 Shadowsocks/V2RayA/V2Ray/Clash 在 Ubuntu/CentOS 上的解决方案</p>
+<p><strong>2024.3.26 最近经常有朋友发邮件来问，于是决定给文章整体翻修一下，还有问题的话欢迎邮件或者 Telegram 联系我（笑）</strong></p>
+<p><strong>2024.4.8 有朋友私信我推荐了 V2RayA 这个客户端，相关教程已经更新，感谢 @QZPM3333汉 的鼎力支持！好人一生平安！</strong></p>
+<p><strong>2024.12.3 结合大家的反馈更新一些细节和措辞</strong></p>
+<hr>
+<h3 id="Shadowsocks"><a href="#Shadowsocks" class="headerlink" title="Shadowsocks"></a>Shadowsocks</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>安装很简单，你可以直接用 <code>pip3</code> 搞定</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip3 install https://github.com/shadowsocks/shadowsocks/archive/master.zip -U</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip3 install shadowsocks</span><br></pre></td></tr></table></figure>
+
+<p>此外，如果你需要使用 Shadowsocks 新的加密方式的话，比如 <code>Chacha20-Ietf-Poly1305</code>，你还需要装下面这个东西</p>
+<blockquote>
+<p>Ubuntu</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libsodium-dev</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>CentOS</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install epel-release</span><br><span class="line">sudo yum -y install libsodium</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>新建配置文件夹和配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /etc/shadowsocks</span><br><span class="line">sudo vi /etc/shadowsocks/shadowsocks.json</span><br></pre></td></tr></table></figure>
+
+<p>配置如下，具体内容自行修改<del>（没有梯子请自行联系工信部申请）</del></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"server"</span>: <span class="string">"your_server_url"</span>,</span><br><span class="line">    <span class="attr">"server_port"</span>: <span class="number">23333</span>,</span><br><span class="line">    <span class="attr">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">    <span class="attr">"local_port"</span>: <span class="number">1080</span>,</span><br><span class="line">    <span class="attr">"password"</span>: <span class="string">"your_server_password"</span>,</span><br><span class="line">    <span class="attr">"timeout"</span>: <span class="number">60</span>,</span><br><span class="line">    <span class="attr">"method"</span>: <span class="string">"chacha20-ietf-poly1305"</span>,</span><br><span class="line">    <span class="attr">"workers"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">"fast_open"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server：科学上网代理提供商的 Shadowsocks 服务器地址</span><br><span class="line">server_port：科学上网代理提供商的 Shadowsocks 服务器端口</span><br><span class="line">local_address：本地 Sock5 代理地址</span><br><span class="line">local_port：本地 Sock5 代理端口</span><br><span class="line">password：科学上网代理提供商的 Shadowsocks 连接密码</span><br><span class="line">timeout：超时等待时间（秒）</span><br><span class="line">method：加密方式</span><br><span class="line">workers：工作线程数</span><br><span class="line">fast_open：TCP Fast Open，按需开启</span><br></pre></td></tr></table></figure>
+
+<p>配置完成，之后就可以通过 <code>local_address</code> 和 <code>local_port</code> 走 Sock5 代理了</p>
+<h4 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h4><p>创建启动脚本 <code>/etc/systemd/system/shadowsocks.service</code> </p>
+<p>这里请确认你的 <code>sslocal</code> 的所在位置，自行修改脚本文件中的 <code>/usr/local/bin/sslocal</code>，<strong>位置不对启动服务时会报 203 错误</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;Shadowsocks</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">TimeoutStartSec&#x3D;0</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;sslocal -c &#x2F;etc&#x2F;shadowsocks&#x2F;shadowsocks.json</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br></pre></td></tr></table></figure>
+
+<h4 id="GO-GO-GO"><a href="#GO-GO-GO" class="headerlink" title="GO! GO! GO!"></a>GO! GO! GO!</h4><p>启动服务或者配置开机自启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开机自启动</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> shadowsocks.service</span><br><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">sudo systemctl start shadowsocks.service</span><br><span class="line"><span class="comment"># 查看状态</span></span><br><span class="line">sudo systemctl status shadowsocks.service</span><br><span class="line"><span class="comment"># 停止服务</span></span><br><span class="line">sudo systemctl stop shadowsocks.service</span><br></pre></td></tr></table></figure>
+
+<p>测试一下，看看你的 ip 地址是否符合预期</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --socks5 127.0.0.1:1080 https://httpbin.org/ip</span><br></pre></td></tr></table></figure>
+
+<p>到这里 Shadowsocks 部分就结束了，可以直接跳转后面的 Sock5 代理部分接着搞</p>
+<hr>
+<h3 id="V2RayA"><a href="#V2RayA" class="headerlink" title="V2RayA"></a>V2RayA</h3><blockquote>
+<p>感谢 @QZPM3333汉 的推荐！</p>
+</blockquote>
+<blockquote>
+<p><a href="https://v2raya.org" target="_blank" rel="noopener">V2RayA</a><br>一个易用而强大的，跨平台的 V2Ray 客户端<br>使用 Golang 和 Vue.js 编写，运行时没有任何外部依赖库，可跨平台运行，借助任意一款浏览器均可操作<br>对于无图形界面的操作系统，在安装 V2RayA 之后，借助另一台 PC 或移动设备即可完成对其的操作，这对于远程服务器、路由器是极其方便的</p>
+</blockquote>
+<p>用这个客户端的好处是你只需要在服务器上运行它，然后打开它提供的 Web UI 就能完成配置工作了，图形化配置比直接命令行能方便不少</p>
+<h4 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h4><p><del>选择你的英雄</del>选择对应系统的链接进行安装吧：<a href="https://v2raya.org/docs/prologue/installation" target="_blank" rel="noopener">这里</a></p>
+<h4 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h4><p>没什么好配置的，安装的过程中该搞定的它都帮你搞定了，注意确认一下服务是不是启动了</p>
+<p>我唯一能想到的坑就是安全组配置问题：如果你使用的是云服务商的云服务器，记得去安全组里把 Web UI 使用的端口放通，不然你没法在服务器外访问 Web UI，这里的默认端口是 2017</p>
+<h4 id="GO-GO-GO-1"><a href="#GO-GO-GO-1" class="headerlink" title="GO! GO! GO!"></a>GO! GO! GO!</h4><p><del>〇神启动</del>照着这个来吧：<a href="https://v2raya.org/docs/prologue/quick-start" target="_blank" rel="noopener">快速上手</a></p>
+<p>使用你的服务器地址和 Web UI 端口在浏览器中配置并使用吧！</p>
+<p>V2RayA 默认开放以下代理端口：</p>
+<ul>
+<li>Sock5 20170</li>
+<li>HTTP 20171</li>
+<li>HTTP 带分流规则 20172</li>
+</ul>
+<p>你可以根据自身需求选择相应的代理方式。至于怎么配置代理嘛，请仔细地继续阅读本文XD</p>
+<hr>
+<h3 id="V2Ray"><a href="#V2Ray" class="headerlink" title="V2Ray"></a>V2Ray</h3><h4 id="安装-2"><a href="#安装-2" class="headerlink" title="安装"></a>安装</h4><p><strong>下面的脚本貌似废弃了，看看这个吧：<a href="https://guide.v2fly.org/prep/install.html#%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85" target="_blank" rel="noopener">这里</a></strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line">bash &lt;(curl -L -s https://install.direct/go.sh)</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置-2"><a href="#配置-2" class="headerlink" title="配置"></a>配置</h4><p>很抱歉，V2Ray 的配置文件太复杂了，我不会写。。。</p>
+<p><strong>所以我把我 Windows 下用的 V2RayN 的配置文件 <code>config.json</code> 直接复制过来了XD</strong></p>
+<p>复制前记得把该配置的东西都配置好，可以顺带把 PAC 加上</p>
+<p>记得去看一下你的 Sock5 代理的端口和地址，我这里是 <code>127.0.0.1:10808</code></p>
+<h4 id="GO-GO-GO-2"><a href="#GO-GO-GO-2" class="headerlink" title="GO! GO! GO!"></a>GO! GO! GO!</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line">sudo service v2ray start</span><br><span class="line"><span class="comment"># 查看状态</span></span><br><span class="line">sudo service v2ray status</span><br><span class="line"><span class="comment"># 停止服务</span></span><br><span class="line">sudo service v2ray stop</span><br></pre></td></tr></table></figure>
+
+<p>当然你也可以测试一下，替换 Sock5 代理的端口和地址就行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --socks5 127.0.0.1:10808 https://httpbin.org/ip</span><br></pre></td></tr></table></figure>
+
+<p>后续工作也是继续搞 Sock5 代理</p>
+<hr>
+<h3 id="Clash"><a href="#Clash" class="headerlink" title="Clash"></a>Clash</h3><p>现在好多人都开始用 Clash 了<del>（我也是）</del>，这里概述一下，具体的还是建议阅读文档</p>
+<p>然而前段时间相关作者都陆续删库跑路了，还挺令人猝不及防的</p>
+<p>所以现在官方的文档和二进制文件都没了，<strong>至于第三方来源靠不靠谱有没有加魔法，那我就不好说了（出了问题别怪我（逃</strong></p>
+<h4 id="安装-3"><a href="#安装-3" class="headerlink" title="安装"></a>安装</h4><p>万物始于 <a href="https://github.com/Dreamacro/clash/wiki#getting-started" target="_blank" rel="noopener">Getting Started</a></p>
+<p><strong>当然上面这个链接寄了，搜了一下这个文档还不错：<a href="https://clash.wiki/introduction/getting-started.html" target="_blank" rel="noopener">快速开始</a></strong></p>
+<p><strong>至于它提供的二进制文件么。。。就看你相不相信它了XD</strong></p>
+<h4 id="配置-3"><a href="#配置-3" class="headerlink" title="配置"></a>配置</h4><p>很抱歉，这么多年过去了（翻修文章的时候还是不会，主要是懒），这种配置文件我还是不会写。。。</p>
+<p><strong>所以我把又我 Windows 下用的 Clash for Windows 的配置文件复制过来了hhhhhh</strong></p>
+<p>动手能力强的你可以结合文档自己 DIY 一下：<a href="https://clash.wiki/configuration/configuration-reference.html" target="_blank" rel="noopener">参考配置</a></p>
+<p>PS: 据我观察大多数 Clash 配置文件中的节点还是用的 Shadowsocks，所以其实可以从 Clash 配置文件中把相关的 Shadowsocks 配置复制出来直接用 Shadowsocks</p>
+<h4 id="GO-GO-GO-3"><a href="#GO-GO-GO-3" class="headerlink" title="GO! GO! GO!"></a>GO! GO! GO!</h4><p>接着看文档吧（确实</p>
+<p>可以考虑以 <code>systemd</code> 服务或者 <code>Docker</code> 的方式运行</p>
+<p>Clash 其实也集成了 HTTP 代理，如果你只是需要用 HTTP/HTTPS 协议科学上网的话，可以直接用环境变量设置系统代理，此处我的 HTTP 代理端口是 7890</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=http://127.0.0.1:7890</span><br><span class="line"><span class="built_in">export</span> https_proxy=http://127.0.0.1:7890</span><br><span class="line"><span class="built_in">export</span> no_proxy=127.0.0.1,localhost</span><br></pre></td></tr></table></figure>
+
+<p>注意确认一下端口配置是否正确</p>
+<hr>
+<h3 id="Sock5-代理"><a href="#Sock5-代理" class="headerlink" title="Sock5 代理"></a>Sock5 代理</h3><p>有了梯子，还需要本地代理工具去代理你的流量，简单来说就是将你的请求通过本地代理工具发送到本地的科学上网客户端，进而转发到科学上网代理提供商的服务器，最终实现对 GFW 的跨越</p>
+<p>这里使用了 <code>proxychains-ng</code> 进行代理，走的是 Sock5 代理</p>
+<h4 id="安装-4"><a href="#安装-4" class="headerlink" title="安装"></a>安装</h4><p>首先从 GitHub 搞到源码：<a href="https://github.com/rofl0r/proxychains-ng" target="_blank" rel="noopener">这里</a></p>
+<p>然后编译安装（这玩意只能编译安装，还好是 C 语言写的）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line">make -j</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置-4"><a href="#配置-4" class="headerlink" title="配置"></a>配置</h4><p>新建配置文件夹和配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.proxychains</span><br><span class="line">vi ~/.proxychains/proxychains.conf</span><br></pre></td></tr></table></figure>
+
+<p>配置如下，记得把最后一行替换成你自己的 Sock5</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">strict_chain</span><br><span class="line">proxy_dns</span><br><span class="line">remote_dns_subnet 224</span><br><span class="line">tcp_read_time_out 15000</span><br><span class="line">tcp_connect_time_out 8000</span><br><span class="line">localnet 127.0.0.0&#x2F;255.0.0.0</span><br><span class="line">quiet_mode</span><br><span class="line"></span><br><span class="line">[ProxyList]</span><br><span class="line">socks5 127.0.0.1 1080</span><br></pre></td></tr></table></figure>
+
+<h4 id="GO-GO-GO-4"><a href="#GO-GO-GO-4" class="headerlink" title="GO! GO! GO!"></a>GO! GO! GO!</h4><p>用法就很简单了，你可以用 <code>proxychains4</code> 去运行任何你想要的命令和程序，最简单的就是新开一个 <code>bash</code> 然后随便搞</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 bash</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>感谢你看到这里！</p>
+<p>我也不知道当年为啥要复读一遍开头作为文章的总结，于是乎我给原先这段话删了并且提供一个最简单的科学上网方法（大误）：</p>
+<blockquote>
+<p>带上你的电脑和服务器，打车去离你最近的国际机场，买一张机票去一个没有 GFW 的地方网上冲浪（不是）</p>
+</blockquote>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-08-27</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Linux/" title="Linux">Linux </a></div></div></div></div><div class="share"><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="https://twitter.com/intent/tweet?url=https://ry.huaji.store/2020/08/Linux-magic-network/&amp;text=让你的 Linux 云服务器也能科学上网！ · 无存在感小透明" target="_blank" rel="noopener"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2022/10/Sparkling/" title="《夏日花火》现已发售！">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020/07/Linux-XServer/" title="没有桌面环境的 Linux 系统，却需要用浏览器打开网页，这要怎么破？">下一篇</a></li></ul></div><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><span class="leancloud_visitors" id="/2020/08/Linux-magic-network/" data-flag-title="让你的 Linux 云服务器也能科学上网！"></span><script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av-min.js"></script><script src="//cdn.jsdelivr.net/npm/valine@1.5.3/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  appId:'CV2PYOHXSB2oApmkqHGUKSzj-MdYXbMMI',
+  appKey:'RcyttO7brDSawuxt4FfSUtPM',
+  placeholder:'中国有句古话叫「闷声大发财」，但是见到你们这样热情，一句话不说也不好，你说是吧？',
+  avatar:'identicon',
+  visitor:'true',
+  recordIP:'true',
+  serverURLs:'https://valine.huaji.store',
+  meta:['nick','mail','link'],
+  requiredFields:['nick','mail']
+})
+
+</script></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="垚"><title>一些有用的文档：Git Tips · 无存在感小透明</title><meta name="description" content="GitHub地址
+2019.7.1
+
+Git Tips
+概念
+working directory 工作区
+staging area 暂存区
+repository 仓库
+.git目录
+.gitignore文件
+
+
+remote 远程仓库
+branch 分支
+merge 合并
+普通合并
+fast-for"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo.png" style="width:180px;"><h3 title=""><a href="/">无存在感小透明</a></h3><div class="description"><p>(✿╹◡╹) 相信的心就是你的魔法 (╹◡╹✿)</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-twitter"></i></a></li><li><a href="https://github.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-github"></i></a></li><li><a href="https://t.me/yao2333" target="_blank" rel="noopener"><i class="fa fa-telegram"></i></a></li><li><a href="mailto:dongshunyao@qq.com"><i class="fa fa-envelope"></i></a></li><li><a href="/rss2.xml"><i class="fa fa-rss"></i></a></li><li><a href="/atom.xml"><i class="fa fa-rss-square"></i></a></li></ul><div class="footer"><span>Time To</span><div class="by_farbox"><span>Mix Drink && Change Life</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">文章</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h2><a>一些有用的文档：Git Tips</a></h2></div><div class="post-content"><p><a href="https://github.com/dongshunyao/some-useful-documents" target="_blank" rel="noopener">GitHub地址</a></p>
+<p><em>2019.7.1</em></p>
+<ul>
+<li><a href="#git-tips">Git Tips</a><ul>
+<li><a href="#概念">概念</a></li>
+<li><a href="#working-directory-工作区">working directory 工作区</a></li>
+<li><a href="#staging-area-暂存区">staging area 暂存区</a></li>
+<li><a href="#repository-仓库">repository 仓库</a><ul>
+<li><a href="#git目录">.git目录</a></li>
+<li><a href="#gitignore文件">.gitignore文件</a></li>
+</ul>
+</li>
+<li><a href="#remote-远程仓库">remote 远程仓库</a></li>
+<li><a href="#branch-分支">branch 分支</a><ul>
+<li><a href="#merge-合并">merge 合并</a><ul>
+<li><a href="#普通合并">普通合并</a></li>
+<li><a href="#fast-forward-merge-快进合并">fast-forward merge 快进合并</a></li>
+</ul>
+</li>
+<li><a href="#合并冲突">合并冲突</a></li>
+<li><a href="#删除分支">删除分支</a></li>
+<li><a href="#pull-request-拉取请求合并请求">pull request 拉取请求（合并请求）</a></li>
+</ul>
+</li>
+<li><a href="#commit-提交">commit 提交</a><ul>
+<li><a href="#提交间隔">提交间隔</a></li>
+<li><a href="#提交说明">提交说明</a></li>
+<li><a href="#更改提交">更改提交</a><ul>
+<li><a href="#更改说明">更改说明</a></li>
+<li><a href="#向提交中添加忘记的文件">向提交中添加忘记的文件</a></li>
+<li><a href="#rebase-变基">rebase 变基</a></li>
+</ul>
+</li>
+<li><a href="#sha-提交id">SHA 提交ID</a></li>
+<li><a href="#相关提交引用">相关提交引用</a></li>
+</ul>
+</li>
+<li><a href="#常用命令">常用命令</a></li>
+<li><a href="#参考">参考</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p><strong><a href="https://github.com/dongshunyao/some-useful-documents/blob/main/Git%20Tips.md#%E6%A6%82%E5%BF%B5" target="_blank" rel="noopener">概念图请见Github</a></strong></p>
+<hr>
+<h3 id="working-directory-工作区"><a href="#working-directory-工作区" class="headerlink" title="working directory 工作区"></a>working directory 工作区</h3><p>简单来说就是你在计算机的文件系统中看到的文件</p>
+<hr>
+<h3 id="staging-area-暂存区"><a href="#staging-area-暂存区" class="headerlink" title="staging area 暂存区"></a>staging area 暂存区</h3><p>对文件的更改都会放到暂存区，一次提交后暂存区反映为提交，暂存区清空</p>
+<hr>
+<h3 id="repository-仓库"><a href="#repository-仓库" class="headerlink" title="repository 仓库"></a>repository 仓库</h3><p>存放文件的地方，会对该文件夹下的所有文件进行追踪</p>
+<h4 id="git目录"><a href="#git目录" class="headerlink" title=".git目录"></a>.git目录</h4><ul>
+<li><code>config</code> 文件：存储了所有与项目有关的配置设置，git 会查看你当前所使用仓库对应的配置文件<code>.git/config</code>中的配置值。这些值仅适用于当前仓库</li>
+<li><code>description</code> 文件：此文件仅用于 GitWeb 程序</li>
+<li><code>hooks</code> 目录：我们会在此处放置客户端或服务器端脚本，以便用来连接到 Git 的不同生命周期事件</li>
+<li><code>info</code> 目录：包含全局排除文件</li>
+<li><code>objects</code> 目录：此目录将存储我们提交的所有提交</li>
+<li><code>refs</code> 目录：此目录存储了指向提交的指针（通常是“分支”和“标签”）</li>
+</ul>
+<h4 id="gitignore文件"><a href="#gitignore文件" class="headerlink" title=".gitignore文件"></a>.gitignore文件</h4><p>记录需要被git忽略的文件，可以对此文件进行文件管理</p>
+<hr>
+<h3 id="remote-远程仓库"><a href="#remote-远程仓库" class="headerlink" title="remote 远程仓库"></a>remote 远程仓库</h3><p>仓库的服务器端，会在本地留有副本，fetch命令可以更新</p>
+<hr>
+<h3 id="branch-分支"><a href="#branch-分支" class="headerlink" title="branch 分支"></a>branch 分支</h3><p>一个版本的不同演化形成分支，<code>master</code>为主分支</p>
+<p>分支会记录当前分支的父分支，log命令只会沿父分支进行展示，特定情况下会让部分提交无法访问，除非记录其ID</p>
+<h4 id="merge-合并"><a href="#merge-合并" class="headerlink" title="merge 合并"></a>merge 合并</h4><h5 id="普通合并"><a href="#普通合并" class="headerlink" title="普通合并"></a>普通合并</h5><p>原分支：两个分支的父分支分离位置的提交</p>
+<p>对两个分支进行合并，合并时无冲突，对于某个更改的最终状态：</p>
+<ul>
+<li>三个分支全部存在 –&gt; 存在</li>
+<li>三个分支全部不存在 –&gt; 不存在</li>
+<li>原分支与一个分支存在 –&gt; 不存在，在一个分支中进行了删除，另一分支未改变，最后应该删除</li>
+<li>仅一个分支存在 –&gt; 存在，在一个分支中进行了增加，另一分支未改变，最后应该增加</li>
+</ul>
+<p>合并分支后的结果为新建的一个提交，其父分支为合并的两个分支</p>
+<h5 id="fast-forward-merge-快进合并"><a href="#fast-forward-merge-快进合并" class="headerlink" title="fast-forward merge 快进合并"></a>fast-forward merge 快进合并</h5><p>合并一个提交与他的父提交（包含更上一级的）时，不会新建提交，会将二者更新到最新的那个的状态</p>
+<p>要合并的分支必须位于检出分支前面。检出分支的指针将向前移动，指向另一分支所指向的同一提交</p>
+<h4 id="合并冲突"><a href="#合并冲突" class="headerlink" title="合并冲突"></a>合并冲突</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span><br><span class="line">//此行下方的所有内容（直到下个指示符）显示了当前分支上的行</span><br><span class="line">||||||| merged common ancestors</span><br><span class="line">//此行下方的所有内容（直到下个指示符）显示了原始行的内容</span><br><span class="line">=======</span><br><span class="line">//表示原始行内容的结束位置，之后的所有行（直到下个指示符）是被合并的当前分支上的行的内容</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; heading-update</span><br><span class="line">//是要被合并的分支（此例中是 heading-update 分支）上的行结束指示符</span><br></pre></td></tr></table></figure>
+
+<p>解决冲突后应将文件重新添加到暂存区。并进行提交</p>
+<h4 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h4><p>删除的只是标签，提交并不会删除，但只能通过ID进行访问</p>
+<p>可以手动回收垃圾，即清除这些提交</p>
+<h4 id="pull-request-拉取请求（合并请求）"><a href="#pull-request-拉取请求（合并请求）" class="headerlink" title="pull request 拉取请求（合并请求）"></a>pull request 拉取请求（合并请求）</h4><p>向管理者发出申请，将自己的分支合并到master主分支中</p>
+<p>可以用于更新自己fork的仓库，即请求将原有仓库的提交合并至自己fork的仓库中。此外，这个问题也可以将原作者的仓库作为本地仓库的远程仓库，从中拉取数据，合并后推送至fork仓库以更新</p>
+<hr>
+<h3 id="commit-提交"><a href="#commit-提交" class="headerlink" title="commit 提交"></a>commit 提交</h3><p>基本操作，对仓库中所有文件创建新的版本</p>
+<p>每次提交最好写明更改内容</p>
+<p>每个提交有对应ID，使用时可以只输出前四个字符</p>
+<h4 id="提交间隔"><a href="#提交间隔" class="headerlink" title="提交间隔"></a>提交间隔</h4><p>选择合适的时间间隔进行提交：<strong>为每项逻辑更改的更改进行一次提交</strong></p>
+<p>例子：</p>
+<ul>
+<li>已经花了一周时间来开发一项新功能，现在你提交添加这项新功能所需的所有更改。从你开始开发它以来，你一直没有进行提交。<ul>
+<li>此提交似乎过大。如果每个提交只做了一项工作并且比较小，则理解每个提交所做的工作会变得更容易。在一周内不进行任何提交并非上策。</li>
+</ul>
+</li>
+<li>你在 README 中发现了三处打字错误。你改正并提交第一处错误。<ul>
+<li>此提交似乎过小。改正所有三处打字错误后再一并提交会更好。这样一来，历史记录不会因打字错误的改正而变得过于混乱。此外，你无需担心会给 README 招致错误，因此，将更改捆绑在一起更可能会是一个好主意。</li>
+</ul>
+</li>
+<li>你已经花了一小时来开发一项新功能，现在，你提交添加这项新功能所需的所有更改。<ul>
+<li>这可能是大小适中的提交。所有工作均与一项功能有关，因此，提交的逻辑目的很清晰。一小时后，可能累积了相当多的内容，但并未多到无法理解。</li>
+<li>另一方面，有时在工作了一小时后，你将会遇到一个以上的自然提交点，这时你会想将功能分解为多个较小的提交。因此，“过大”在这里也可能是一个合理的回答。</li>
+</ul>
+</li>
+<li>你改正了不同函数中的两个小错误，然后同时提交两者。<ul>
+<li>此提交可能过大。在改正第一个错误后提交将会更好，因为这两个错误的改正互不相关。</li>
+</ul>
+</li>
+</ul>
+<p><strong>重点：每个提交都应具有一个清晰的逻辑目的，而且绝不应在不进行提交的情况下完成过多工作</strong></p>
+<h4 id="提交说明"><a href="#提交说明" class="headerlink" title="提交说明"></a>提交说明</h4><p><strong>保持一致性!</strong></p>
+<p>建议：</p>
+<ul>
+<li>消息篇幅简短（少于 60 个字符）</li>
+<li>解释提交的作用（不是如何更改或为何更改！）</li>
+</ul>
+<p>禁忌：</p>
+<ul>
+<li>请勿解释为何做出了这些更改</li>
+<li>请勿解释如何进行了更改</li>
+<li>请勿使用单词”and”</li>
+<li>如果你必须使用 “and”，则你的提交说明可能进行了太多的更改，将这些更改拆分为独立的提交</li>
+<li>例如 “make the background color pink and increase the size of the sidebar”</li>
+</ul>
+<h4 id="更改提交"><a href="#更改提交" class="headerlink" title="更改提交"></a>更改提交</h4><h5 id="更改说明"><a href="#更改说明" class="headerlink" title="更改说明"></a>更改说明</h5><p><code>git commit --amend</code> 可直接更改提交说明</p>
+<h5 id="向提交中添加忘记的文件"><a href="#向提交中添加忘记的文件" class="headerlink" title="向提交中添加忘记的文件"></a>向提交中添加忘记的文件</h5><p>步骤：</p>
+<ol>
+<li>编辑文件</li>
+<li>保存文件</li>
+<li>暂存文件</li>
+<li>运行 <code>git commit --amend</code></li>
+</ol>
+<h5 id="rebase-变基"><a href="#rebase-变基" class="headerlink" title="rebase 变基"></a>rebase 变基</h5><p><code>git rebase -i HEAD~?</code>  要操作几个提交，？处的数字就是几</p>
+<p>对多个提交同时操作，可以用于合并多个提交</p>
+<p>提交按从上到下更新排列</p>
+<p>编辑指令：</p>
+<ul>
+<li><code>pick</code>：使提交保持原样（缩写 <code>p</code>）</li>
+<li><code>reword</code>：保留该提交，但我需要修改该提交的注释（缩写 <code>r</code>）</li>
+<li><code>edit</code>：保留该提交, 但先不提交，以便修改（缩写 <code>e</code>）</li>
+<li><code>squash</code>：将此提交的更改结合到之前的提交（列表中位于其上面的提交）（缩写 <code>s</code>）</li>
+<li><code>fixup</code>： 将此提交的更改结合到前一个提交中，但删除提交说明（缩写 <code>f</code>）</li>
+<li><code>exec</code>：执行shell命令（缩写 <code>x</code>）</li>
+<li><code>drop</code>：删除提交（缩写 <code>d</code>）</li>
+</ul>
+<h4 id="SHA-提交ID"><a href="#SHA-提交ID" class="headerlink" title="SHA 提交ID"></a>SHA 提交ID</h4><p>SHA 是每个提交的ID编号，它是一个长40个字符的字符（由0–9和a–f组成），并根据 Git 中的文件或目录结构的内容计算得出。SHA 的全称是”Secure Hash Algorithm”（安全哈希算法）</p>
+<h4 id="相关提交引用"><a href="#相关提交引用" class="headerlink" title="相关提交引用"></a>相关提交引用</h4><p><code>^</code> 表示父提交</p>
+<p><code>~</code> 表示第一个父提交</p>
+<p>我们可以通过以下方式引用之前的提交：</p>
+<ul>
+<li>父提交，以下内容表示当前提交的父提交<ul>
+<li><code>HEAD^</code></li>
+<li><code>HEAD~</code></li>
+<li><code>HEAD~1</code></li>
+</ul>
+</li>
+<li>祖父提交，以下内容表示当前提交的祖父提交<ul>
+<li><code>HEAD^^</code></li>
+<li><code>HEAD~2</code></li>
+</ul>
+</li>
+<li>曾祖父提交，以下内容表示当前提交的曾祖父提交<ul>
+<li><code>HEAD^^^</code></li>
+<li><code>HEAD~3</code></li>
+</ul>
+</li>
+</ul>
+<p><code>^</code> 和 <code>~</code> 的区别主要体现在通过合并而创建的提交中。合并的提交具有两个父级，<code>^</code> 引用用来表示第一个父提交，而 <code>^2</code> 表示第二个父提交。第一个父提交是当你运行 <code>git merge</code> 时所处的分支，而第二个父提交是被合并的分支。</p>
+<p>例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">* 9ec05ca (HEAD -&gt; master) Revert <span class="string">"Set page heading to "</span>Quests &amp; Crusades<span class="string">""</span></span><br><span class="line">* db7e87a Set page heading to <span class="string">"Quests &amp; Crusades"</span></span><br><span class="line">*   796ddb0 Merge branch <span class="string">'heading-update'</span></span><br><span class="line">|\  </span><br><span class="line">| * 4c9749e (heading-update) Set page heading to <span class="string">"Crusade"</span></span><br><span class="line">* | 0c5975a Set page heading to <span class="string">"Quest"</span></span><br><span class="line">|/  </span><br><span class="line">*   1a56a81 Merge branch <span class="string">'sidebar'</span></span><br><span class="line">|\  </span><br><span class="line">| * f69811c (sidebar) Update sidebar with favorite movie</span><br><span class="line">| * e6c65a6 Add new sidebar content</span><br><span class="line">* | e014d91 (footer) Add links to social media</span><br><span class="line">* | 209752a Improve site heading <span class="keyword">for</span> SEO</span><br><span class="line">* | 3772ab1 Set background color <span class="keyword">for</span> page</span><br><span class="line">|/  </span><br><span class="line">* 5bfe5e7 Add starting HTML structure</span><br><span class="line">* 6fa5f34 Add .gitignore file</span><br><span class="line">* a879849 Add header to blog</span><br><span class="line">* 94de470 Initial commit</span><br><span class="line"></span><br><span class="line">因为HEAD 指向 9ec05ca commit：</span><br><span class="line"></span><br><span class="line">HEAD^ 是 db7e87a commit</span><br><span class="line">HEAD~1 是 db7e87a commit</span><br><span class="line"></span><br><span class="line">HEAD^^ 是 796ddb0 commit</span><br><span class="line">HEAD~2 是 796ddb0 commit</span><br><span class="line"></span><br><span class="line">HEAD^^^ 是 0c5975a commit</span><br><span class="line">HEAD~3 是 0c5975a commit</span><br><span class="line"></span><br><span class="line">HEAD^^^2 是 4c9749e commit（这是曾祖父的 (HEAD^^) 第二个父 commit (^2))</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">git config --list                  //显示设置信息</span><br><span class="line">git <span class="built_in">log</span>                            //查看日志，可以按q退出</span><br><span class="line">git <span class="built_in">log</span> --all                      //查看所有分支的日志</span><br><span class="line">git <span class="built_in">log</span> --<span class="built_in">stat</span>                     //查看日志与更改量的统计数据，行为单位</span><br><span class="line">git <span class="built_in">log</span> --graph --oneline branchname1 branchname2 ...</span><br><span class="line">//可视化并简洁显示分支情况</span><br><span class="line">git <span class="built_in">log</span> --patch                    //查看日志，显示文件的实际更改</span><br><span class="line">git <span class="built_in">log</span> -p                         //同上</span><br><span class="line">git <span class="built_in">log</span> -p -w                      //同上，并忽略空格更改</span><br><span class="line">git <span class="built_in">log</span> -p commit                  //同-p，从指定提交开始</span><br><span class="line">git show commit                    //比较该提交与其父提交</span><br><span class="line">git diff                           //比较工作区和暂存区</span><br><span class="line">git diff --staged                  //比较暂存区和HEAD</span><br><span class="line">git diff commit_old commit2_new    //比较两次提交，参数为提交ID</span><br><span class="line">git --version                      //查看版本</span><br><span class="line">git <span class="built_in">clone</span> URL repositoryname       //克隆仓库</span><br><span class="line">git config --global color.ui auto  //让文字有色彩</span><br><span class="line">git tag                            //显示所有标签</span><br><span class="line">git tag -d <span class="string">"message"</span>               //删除标签</span><br><span class="line">git tag <span class="string">"message"</span>                  //加轻量级标签</span><br><span class="line">git tag <span class="string">"message"</span> commit           //给指定提交加标签</span><br><span class="line">git tag -a <span class="string">"message"</span>               //加带注释的标签</span><br><span class="line">git checkout commit                //检出，即回滚至指定提交</span><br><span class="line">git checkout branchname            //检出，即切换至指定分支</span><br><span class="line">git checkout -b branchname         //新建分支并检出</span><br><span class="line">git checkout -- file               //放弃工作区修改</span><br><span class="line">git init                           //将当前目录初始化为仓库</span><br><span class="line">git status                         //显示工作目录和暂存区的状态</span><br><span class="line">git add filename1 filename2 ...    //添加文件到暂存区</span><br><span class="line">git reset filename1 filename2 ...  //从暂存区删除文件</span><br><span class="line">git reset --hard                   //清空暂存区</span><br><span class="line">git reset commit                   //取消提交并清空暂存区，但工作区保留更改</span><br><span class="line">git reset --soft commit            //取消提交并将提交退回至暂存区</span><br><span class="line">git reset --hard commit            //取消提交，清除所有更改，包括工作区</span><br><span class="line">git revert commit                  //还原提交</span><br><span class="line">//此命令将通过创建一个新的提交来记录撤消目标提交，之前的保留</span><br><span class="line">git commit -m <span class="string">"message"</span>            //提交</span><br><span class="line">git commit --amend                 //更改提交说明，详见上文</span><br><span class="line">git branch                         //显示所有分支，*为当前状态</span><br><span class="line">git branch branchname              //新建分支</span><br><span class="line">git branch branchname commit       //创建分支并指向指定提交</span><br><span class="line">git branch -d branchname           //删除分支</span><br><span class="line">git gc                             //垃圾回收，慎用</span><br><span class="line">git merge branchname2 branchname3 ... </span><br><span class="line">//合并分支到当前分支，并在当前分支创建新的提交</span><br><span class="line">git remote                         //查看远程仓库</span><br><span class="line">git remote -v                      //查看远程仓库，并详细输出</span><br><span class="line">git remote add remotename URL      //与远程仓库建立链接，推荐用origin命名</span><br><span class="line">git push remotename branchname     //推送至远程仓库</span><br><span class="line">git pull remotename branchname     //从远程仓库拉取，并合并至当前分支</span><br><span class="line">//若远程仓库与本地存在冲突，则次命令无效，需要fetch后进行本地合并与推送</span><br><span class="line">git fetch                          //更新远程仓库的本地版本</span><br><span class="line">git shortlog                       //查看每个用户的提交，按人名字母顺序排列</span><br><span class="line">git shortlog -s -n                 //查看每个用户提交数量并按此排序</span><br><span class="line">git <span class="built_in">log</span> --author=<span class="string">"name"</span>            //按作者筛选提交</span><br><span class="line">git <span class="built_in">log</span> --grep=<span class="string">"message"</span>           //按提交信息的关键词筛选</span><br><span class="line">git rebase -i HEAD~?               //要操作几个提交，？处的数字就是几</span><br><span class="line">git stash                          //暂存当前工作状态，并重置</span><br><span class="line">git stash list                     //查看暂存</span><br><span class="line">git stash apply                    //恢复暂存</span><br><span class="line">git stash pop                      //恢复暂存并清除暂存</span><br><span class="line">git stash drop                     //清除暂存</span><br><span class="line">git check-ignore                   //检查忽略文件</span><br><span class="line"></span><br><span class="line">git <span class="built_in">log</span> --oneline | wc -l          //统计总提交次数</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/521xueweihan/git-tips" target="_blank" rel="noopener">git-tips</a></p>
+<p><a href="http://gitbook.liuhui998.com/index.html" target="_blank" rel="noopener">Git Community Book</a></p>
+<p><a href="https://git-scm.com/book/zh/v2/" target="_blank" rel="noopener">Pro Git</a></p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-23</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Some-Useful-Documents/" title="Some Useful Documents">Some Useful Documents </a></div></div></div></div><div class="share"><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="https://twitter.com/intent/tweet?url=https://ry.huaji.store/2023/04/Some-useful-documents-git-tips/&amp;text=一些有用的文档：Git Tips · 无存在感小透明" target="_blank" rel="noopener"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2023/04/Some-useful-documents-template/" title="一些有用的文档：2020-5-12 %版">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2023/04/Some-useful-documents-qt-tips/" title="一些有用的文档：Qt Tips">下一篇</a></li></ul></div><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><span class="leancloud_visitors" id="/2023/04/Some-useful-documents-git-tips/" data-flag-title="一些有用的文档：Git Tips"></span><script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av-min.js"></script><script src="//cdn.jsdelivr.net/npm/valine@1.5.3/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  appId:'CV2PYOHXSB2oApmkqHGUKSzj-MdYXbMMI',
+  appKey:'RcyttO7brDSawuxt4FfSUtPM',
+  placeholder:'中国有句古话叫「闷声大发财」，但是见到你们这样热情，一句话不说也不好，你说是吧？',
+  avatar:'identicon',
+  visitor:'true',
+  recordIP:'true',
+  serverURLs:'https://valine.huaji.store',
+  meta:['nick','mail','link'],
+  requiredFields:['nick','mail']
+})
+
+</script></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>

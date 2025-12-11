@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="垚"><title>Leetcode 365 水壶问题 · 无存在感小透明</title><meta name="description" content="卡题了。。。
+
+方法一 暴力暴力出奇迹！
+这题可以考虑 BFS 或者 DFS ，用一个 unordered_set 来记录当前l两个水壶水的状态
+在任意一个时刻，你可以执行以下操作
+
+把 X 壶的水灌进 Y 壶，直至 Y 壶灌满或 X 壶倒空
+把 Y 壶的水灌进 X 壶，直至 X 壶灌满或 Y 壶倒"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo.png" style="width:180px;"><h3 title=""><a href="/">无存在感小透明</a></h3><div class="description"><p>(✿╹◡╹) 相信的心就是你的魔法 (╹◡╹✿)</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-twitter"></i></a></li><li><a href="https://github.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-github"></i></a></li><li><a href="https://t.me/yao2333" target="_blank" rel="noopener"><i class="fa fa-telegram"></i></a></li><li><a href="mailto:dongshunyao@qq.com"><i class="fa fa-envelope"></i></a></li><li><a href="/rss2.xml"><i class="fa fa-rss"></i></a></li><li><a href="/atom.xml"><i class="fa fa-rss-square"></i></a></li></ul><div class="footer"><span>Time To</span><div class="by_farbox"><span>Mix Drink && Change Life</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">文章</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h2><a>Leetcode 365 水壶问题</a></h2></div><div class="post-content"><blockquote>
+<p>卡题了。。。</p>
+</blockquote>
+<h3 id="方法一-暴力"><a href="#方法一-暴力" class="headerlink" title="方法一 暴力"></a>方法一 暴力</h3><p>暴力出奇迹！</p>
+<p>这题可以考虑 BFS 或者 DFS ，用一个 <code>unordered_set</code> 来记录当前l两个水壶水的状态</p>
+<p>在任意一个时刻，你可以执行以下操作</p>
+<ul>
+<li>把 X 壶的水灌进 Y 壶，直至 Y 壶灌满或 X 壶倒空</li>
+<li>把 Y 壶的水灌进 X 壶，直至 X 壶灌满或 Y 壶倒空</li>
+<li>把 X 壶灌满</li>
+<li>把 Y 壶灌满</li>
+<li>把 X 壶倒空</li>
+<li>把 Y 壶倒空</li>
+</ul>
+<p>然而这个办法并不推荐，时间和空间都太大了</p>
+<hr>
+<h3 id="方法二-扩展-GCD"><a href="#方法二-扩展-GCD" class="headerlink" title="方法二 扩展 GCD"></a>方法二 扩展 GCD</h3><p>然后就是这题的正解，说是扩展 GCD ，其实就是裴蜀等式</p>
+<p>先考虑一下方法一里面的操作，其实有两个操作是没有提到的：</p>
+<ul>
+<li>把一个不空的水壶倒空</li>
+<li>把一个不满的水壶装满</li>
+</ul>
+<p>然而，你是不会做这两个操作的。这两个操作相当与你把之前的操作直接抹掉了</p>
+<p>然后两个壶里面互相倒其实是不会对总量发生改变的</p>
+<p>我们可以认为每次操作只会给水的总量带来正负 x 或者正负 y 的变化量</p>
+<p>因此我们要找到一对整数 (a, b)，使得 ax+by=z 有解即可</p>
+<p>还有一点是 z&lt;=x+y ，毕竟壶就这么大</p>
+<p>然后摸出裴蜀等式：</p>
+<p>对任意两个整数 a, b ，关于未知数x和y的线性丢番图方程（裴蜀等式） ax+by=m</p>
+<p>当且仅当 m 是 gcd(a,b) 的倍数时有整数解 (x,y) 。裴蜀等式有解时必然有无穷多个解。</p>
+<p>推论： a,b 互质时使得 ax+by=1 有解（充要条件）</p>
+<p>所以只需要找到 gcd(x, y) 并判断 z 是否是它的倍数即可</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">canMeasureWater</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> z)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (z &gt; x + y) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">if</span> (z == x || z == y) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">if</span> (x == <span class="number">0</span> || y == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">return</span> z % gcd(x, y) == <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="方法三-动态规划"><a href="#方法三-动态规划" class="headerlink" title="方法三 动态规划"></a>方法三 动态规划</h3><p>没想到吧！这也能 DP ！</p>
+<p>其实原理和方法二一样的</p>
+<p>现在我们能有无限个 x 升和 y 升，因此我们还能有无限个 -x 升和 -y 升</p>
+<p>然后摸出 <a href="https://leetcode-cn.com/problems/coin-change/" target="_blank" rel="noopener">Leetcode 322 零钱兑换</a> 的代码，改一改扔进去跑就行</p>
+<p>也就是根据这四个零钱拼出来 z 的总额</p>
+<p>代码复用大成功！</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-03-24</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Leetcode/" title="Leetcode">Leetcode </a></div></div></div></div><div class="share"><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="https://twitter.com/intent/tweet?url=https://ry.huaji.store/2020/03/Leetcode-365/&amp;text=Leetcode 365 水壶问题 · 无存在感小透明" target="_blank" rel="noopener"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2020/03/Leetcode-300/" title="Leetcode 300 最长上升子序列">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020/03/Leetcode-stack/" title="单调队列与单调栈">下一篇</a></li></ul></div><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><span class="leancloud_visitors" id="/2020/03/Leetcode-365/" data-flag-title="Leetcode 365 水壶问题"></span><script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av-min.js"></script><script src="//cdn.jsdelivr.net/npm/valine@1.5.3/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  appId:'CV2PYOHXSB2oApmkqHGUKSzj-MdYXbMMI',
+  appKey:'RcyttO7brDSawuxt4FfSUtPM',
+  placeholder:'中国有句古话叫「闷声大发财」，但是见到你们这样热情，一句话不说也不好，你说是吧？',
+  avatar:'identicon',
+  visitor:'true',
+  recordIP:'true',
+  serverURLs:'https://valine.huaji.store',
+  meta:['nick','mail','link'],
+  requiredFields:['nick','mail']
+})
+
+</script></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>

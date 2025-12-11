@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="垚"><title>Java EE 02：基于 MySQL+Tomcat+Servlet+JSP 的简单作业管理系统 · 无存在感小透明</title><meta name="description" content="前言本文将介绍一个基于 MySQL+Tomcat+Servlet+JSP 的简单作业管理系统
+Git 仓库地址：HomeworkManagement
+开源许可证采用 Apache-2.0
+
+功能介绍这个项目是为学生和教师设计的简易的作业的提交和管理平台，暂时不用考虑权限问题
+对于教师，有以下功能：
+"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo.png" style="width:180px;"><h3 title=""><a href="/">无存在感小透明</a></h3><div class="description"><p>(✿╹◡╹) 相信的心就是你的魔法 (╹◡╹✿)</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-twitter"></i></a></li><li><a href="https://github.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-github"></i></a></li><li><a href="https://t.me/yao2333" target="_blank" rel="noopener"><i class="fa fa-telegram"></i></a></li><li><a href="mailto:dongshunyao@qq.com"><i class="fa fa-envelope"></i></a></li><li><a href="/rss2.xml"><i class="fa fa-rss"></i></a></li><li><a href="/atom.xml"><i class="fa fa-rss-square"></i></a></li></ul><div class="footer"><span>Time To</span><div class="by_farbox"><span>Mix Drink && Change Life</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">文章</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h2><a>Java EE 02：基于 MySQL+Tomcat+Servlet+JSP 的简单作业管理系统</a></h2></div><div class="post-content"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文将介绍一个基于 MySQL+Tomcat+Servlet+JSP 的简单作业管理系统</p>
+<p>Git 仓库地址：<a href="https://github.com/dongshunyao/HomeworkManagement" target="_blank" rel="noopener">HomeworkManagement</a></p>
+<p>开源许可证采用 <code>Apache-2.0</code></p>
+<hr>
+<h3 id="功能介绍"><a href="#功能介绍" class="headerlink" title="功能介绍"></a>功能介绍</h3><p>这个项目是为学生和教师设计的简易的作业的提交和管理平台，暂时不用考虑权限问题</p>
+<p>对于教师，有以下功能：</p>
+<ul>
+<li>添加学生</li>
+<li>查看学生</li>
+<li>添加作业</li>
+<li>查看作业</li>
+<li>查看已提交的作业</li>
+</ul>
+<p>对于学生，有以下功能：</p>
+<ul>
+<li>查看作业</li>
+<li>提交作业</li>
+</ul>
+<hr>
+<h3 id="系统演示"><a href="#系统演示" class="headerlink" title="系统演示"></a>系统演示</h3><p>启动后首先进入首页，这里的首页是 <code>index.jsp</code>，你需要选择自己的角色</p>
+<p><img src="/images/JavaEE-02/20200313105948.png" alt=""></p>
+<hr>
+<h4 id="我是教师"><a href="#我是教师" class="headerlink" title="我是教师"></a>我是教师</h4><p>选择 <code>我是教师</code> 将进入教师主页，系统会列出所有可以进行的操作</p>
+<p><img src="/images/JavaEE-02/20200313110137.png" alt=""></p>
+<blockquote>
+<p>添加作业</p>
+</blockquote>
+<p>选择 <code>添加作业</code> 将弹出新窗口进入作业的添加页面，教师可以在这里发布新的作业</p>
+<p><img src="/images/JavaEE-02/20200313111651.png" alt=""></p>
+<p>其中所有选项必填，提交后会返回到服务器和数据库，并返回结果</p>
+<p><img src="/images/JavaEE-02/20200313110917.png" alt=""></p>
+<blockquote>
+<p>添加学生</p>
+</blockquote>
+<p>选择 <code>添加学生</code> 将弹出新窗口进入学生的添加页面，教师可以在这里添加新的学生</p>
+<p><img src="/images/JavaEE-02/20200313111039.png" alt=""></p>
+<p>如果学号已经存在，提交后将返回错误提示</p>
+<p><img src="/images/JavaEE-02/20200313111710.png" alt=""></p>
+<blockquote>
+<p>查看学生列表</p>
+</blockquote>
+<p>选择 <code>查看学生列表</code> 将弹出新窗口进入学生的展示页面，这里展示了所有的学生，点击下方可以添加学生</p>
+<p><img src="/images/JavaEE-02/20200313112151.png" alt=""></p>
+<blockquote>
+<p>查看作业列表</p>
+</blockquote>
+<p>选择 <code>查看作业列表</code> 将弹出新窗口进入作业的展示页面，这里展示了所有发布的作业，点击下方可以添加作业</p>
+<p><img src="/images/JavaEE-02/20200313112506.png" alt=""></p>
+<p>点击作业右边的<code>查看</code>可以查看对应作业所有的提交情况</p>
+<p><img src="/images/JavaEE-02/20200313112617.png" alt=""></p>
+<hr>
+<h4 id="我是学生"><a href="#我是学生" class="headerlink" title="我是学生"></a>我是学生</h4><p>从主页进入学生主页</p>
+<p><img src="/images/JavaEE-02/20200313112830.png" alt=""></p>
+<blockquote>
+<p>查看作业列表</p>
+</blockquote>
+<p>这里可以查看所有发布的作业，点击相应的按钮即可提交</p>
+<p><img src="/images/JavaEE-02/20200313113512.png" alt=""></p>
+<p><img src="/images/JavaEE-02/20200313113606.png" alt=""></p>
+<p>点击提交后会查询数据库判断输入的合法性，并返回结果</p>
+<p><img src="/images/JavaEE-02/20200313113658.png" alt=""></p>
+<p><img src="/images/JavaEE-02/20200313113758.png" alt=""></p>
+<hr>
+<h3 id="系统设计与源码分析"><a href="#系统设计与源码分析" class="headerlink" title="系统设计与源码分析"></a>系统设计与源码分析</h3><h4 id="系统架构与设计"><a href="#系统架构与设计" class="headerlink" title="系统架构与设计"></a>系统架构与设计</h4><p><img src="/images/JavaEE-02/20200313130410.png" alt=""></p>
+<hr>
+<h4 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h4><p>数据库一共有三张表，具体内容可以参考源码中的 <code>hwm.sql</code> 文件</p>
+<p><img src="/images/JavaEE-02/20200313113945.png" alt=""></p>
+<hr>
+<h4 id="实体类"><a href="#实体类" class="headerlink" title="实体类"></a>实体类</h4><p>所有的实体类位于 <code>package com.hwm.model</code>，每个实体类对应数据库的一张表，并添加了 <code>get</code> 和 <code>set</code> 方法，这里不再赘述</p>
+<hr>
+<h4 id="数据库连接件"><a href="#数据库连接件" class="headerlink" title="数据库连接件"></a>数据库连接件</h4><p>所有的实体类位于 <code>package com.hwm.jdbc</code></p>
+<p>这里为项目添加了 <code>Maven</code> 用于管理依赖，<code>mysql-connector</code> 也在其中，使用源码的时候需要在 <code>Project Structure -&gt; Artifacts -&gt; Output Layout -&gt; WEV-INF</code> 中添加 <code>lib</code>目录并添加依赖</p>
+<p>其中，<code>JdbcConnection</code> 维护了一个单例类，用于保存与数据库的连接</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hwm.jdbc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JdbcConnection</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> JdbcConnection jdbcConnection;</span><br><span class="line">    <span class="keyword">private</span> Connection connection;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> JdbcConnection <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (jdbcConnection == <span class="keyword">null</span>) &#123;</span><br><span class="line">            jdbcConnection = <span class="keyword">new</span> JdbcConnection();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> jdbcConnection;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">JdbcConnection</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> String url = <span class="string">"jdbc:mysql://localhost:3306/hwm?serverTimezone=GMT%2B8"</span>;</span><br><span class="line">        <span class="keyword">final</span> String driverName = <span class="string">"com.mysql.cj.jdbc.Driver"</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(driverName);</span><br><span class="line">            connection = DriverManager.getConnection(url, <span class="string">"root"</span>, <span class="string">"19990326"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException | ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Connection <span class="title">getConnection</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> connection;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>HomeworkJdbc</code>, <code>StudentJdbc</code>, <code>SubmitHomeworkJdbc</code> 分别对应了三张表在数据库中的操作方法</p>
+<hr>
+<h4 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h4><p>Servlet 共分为两个部分，分别是 <code>package com.hwm.servlet.student</code> 和 <code>package com.hwm.servlet.teacher</code> ，分别用于处理教师和学生的请求</p>
+<p>所有的类都继承自 <code>HttpServlet</code> ，并采用 <code>@WebServlet</code> 注解进行映射</p>
+<p>具体的跳转实现请参考上文，源码就不再赘述</p>
+<hr>
+<h4 id="JSP"><a href="#JSP" class="headerlink" title="JSP"></a>JSP</h4><p>所有的 前端页面均采用 JSP ，位于 <code>web</code> 目录下，页面跳转请参考上文</p>
+<p><code>index.jsp</code> 为系统主页，<code>return.jsp</code> 为处理结果的返回页面</p>
+<p><code>teacher</code> 目录包含教师的主页与所有相关页面，<code>student</code> 目录包含学生的主页与所有相关页面</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-03-12</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Java-EE/" title="Java EE">Java EE </a></div></div></div></div><div class="share"><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="https://twitter.com/intent/tweet?url=https://ry.huaji.store/2020/03/JavaEE-02/&amp;text=Java EE 02：基于 MySQL+Tomcat+Servlet+JSP 的简单作业管理系统 · 无存在感小透明" target="_blank" rel="noopener"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2020/03/Leetcode-stack/" title="单调队列与单调栈">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020/03/Leetcode-206/" title="Leetcode 206 反转链表">下一篇</a></li></ul></div><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><span class="leancloud_visitors" id="/2020/03/JavaEE-02/" data-flag-title="Java EE 02：基于 MySQL+Tomcat+Servlet+JSP 的简单作业管理系统"></span><script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av-min.js"></script><script src="//cdn.jsdelivr.net/npm/valine@1.5.3/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  appId:'CV2PYOHXSB2oApmkqHGUKSzj-MdYXbMMI',
+  appKey:'RcyttO7brDSawuxt4FfSUtPM',
+  placeholder:'中国有句古话叫「闷声大发财」，但是见到你们这样热情，一句话不说也不好，你说是吧？',
+  avatar:'identicon',
+  visitor:'true',
+  recordIP:'true',
+  serverURLs:'https://valine.huaji.store',
+  meta:['nick','mail','link'],
+  requiredFields:['nick','mail']
+})
+
+</script></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>

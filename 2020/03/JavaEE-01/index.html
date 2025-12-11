@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="垚"><title>Java EE 01：从零开始搭建 Java EE 项目 · 无存在感小透明</title><meta name="description" content="前言这是 Java EE 系列的第一篇博文。本文将手把手教你如何新建一个属于你的 Java EE 项目
+本文基于 Windows 10 系统，下面将从 JDK、Tomcat、MySQL 的安装与配置开始，一步步的进行说明，有任何问题或建议欢迎与我联系XD
+
+安装与配置 Java 环境这里选择了 Op"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo.png" style="width:180px;"><h3 title=""><a href="/">无存在感小透明</a></h3><div class="description"><p>(✿╹◡╹) 相信的心就是你的魔法 (╹◡╹✿)</p></div></div></div><ul class="social-links"><li><a href="https://twitter.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-twitter"></i></a></li><li><a href="https://github.com/dongshunyao" target="_blank" rel="noopener"><i class="fa fa-github"></i></a></li><li><a href="https://t.me/yao2333" target="_blank" rel="noopener"><i class="fa fa-telegram"></i></a></li><li><a href="mailto:dongshunyao@qq.com"><i class="fa fa-envelope"></i></a></li><li><a href="/rss2.xml"><i class="fa fa-rss"></i></a></li><li><a href="/atom.xml"><i class="fa fa-rss-square"></i></a></li></ul><div class="footer"><span>Time To</span><div class="by_farbox"><span>Mix Drink && Change Life</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">文章</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.png"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h2><a>Java EE 01：从零开始搭建 Java EE 项目</a></h2></div><div class="post-content"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这是 Java EE 系列的第一篇博文。本文将手把手教你如何新建一个属于你的 Java EE 项目</p>
+<p>本文基于 Windows 10 系统，下面将从 JDK、Tomcat、MySQL 的安装与配置开始，一步步的进行说明，有任何问题或建议欢迎与我联系XD</p>
+<hr>
+<h3 id="安装与配置-Java-环境"><a href="#安装与配置-Java-环境" class="headerlink" title="安装与配置 Java 环境"></a>安装与配置 Java 环境</h3><p>这里选择了 OpenJDK 12，大家可以自行到 <a href="http://jdk.java.net" target="_blank" rel="noopener">OpenJDK 官网</a> 下载你喜欢的相应系统版本的 JDK</p>
+<p>下载压缩包后解压，这里选择将文件放在了 <code>C:\x86\openjdk\jdk-12.0.2</code></p>
+<p><img src="/images/JavaEE-01/20200303213308.png" alt="JDK 路径"></p>
+<p>接下来是配置系统环境变量，转到 <code>控制面板 &gt; 系统 &gt; 高级系统设置 &gt; 高级 &gt; 环境变量</code></p>
+<ul>
+<li>在系统变量中添加 <code>JAVA_HOME</code></li>
+</ul>
+<p><img src="/images/JavaEE-01/20200303215958.png" alt="JAVA_HOME"></p>
+<ul>
+<li>在系统变量 <code>PATH</code> 中添加 <code>%JAVA_HOME%\bin</code></li>
+</ul>
+<p>完成后可以通过在命令提示符中执行 <code>java --version</code> 和 <code>javac --version</code> 验证安装</p>
+<hr>
+<h3 id="安装与配置-Tomcat"><a href="#安装与配置-Tomcat" class="headerlink" title="安装与配置 Tomcat"></a>安装与配置 Tomcat</h3><p>这里选择了 Tomcat 9.0.31，可以从 <a href="http://tomcat.apache.org" target="_blank" rel="noopener">Tomcat 官网</a> 下载</p>
+<p>下载压缩包后解压，这里选择将文件放在了 <code>C:\x86\apache-tomcat-9.0.31</code></p>
+<p><img src="/images/JavaEE-01/20200303221540.png" alt="Tomcat"></p>
+<p>根据目录下的 <code>RUNNING.txt</code> 的指引，在系统变量中添加 <code>CATALINA_HOME</code> ，并在系统变量 <code>PATH</code> 中添加 <code>%CATALINA_HOME%\bin</code></p>
+<p><img src="/images/JavaEE-01/20200303222153.png" alt="CATALINA_HOME"></p>
+<p>完成后运行 <code>bin\startup.bat</code> 验证安装</p>
+<p><img src="/images/JavaEE-01/20200303222841.png" alt="Tomcat"></p>
+<p>如果控制台出现乱码，打开 <code>conf\logging.properties</code> ，修改</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">java.util.logging.ConsoleHandler.encoding</span> = <span class="string">UTF-8</span></span><br></pre></td></tr></table></figure>
+
+<p>为</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">java.util.logging.ConsoleHandler.encoding</span> = <span class="string">GBK</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="安装与配置-MySQL"><a href="#安装与配置-MySQL" class="headerlink" title="安装与配置 MySQL"></a>安装与配置 MySQL</h3><p>MySQL 方面选择了 MySQL Community Server 8.0.19，可以从 <a href="https://dev.mysql.com/downloads/mysql" target="_blank" rel="noopener">MySQL 官网</a> 下载 <del>（打不开不要问我怎么办，我这办法也不可能写出来啊2333）</del></p>
+<p>记得在 <a href="https://dev.mysql.com/downloads/connector/j" target="_blank" rel="noopener">这里</a> 下载与 MySQL 版本对应 MySQL Connector，后面会用到</p>
+<p>下载压缩包后解压，这里选择将文件放在了 <code>C:\x86\mysql-8.0.19-winx64</code></p>
+<p>在目录下新建 <code>my.ini</code>，填入以下内容，注意更改 <code>basedir</code></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[mysql]</span></span><br><span class="line"><span class="attr">default-character-set</span> = utf8</span><br><span class="line"> </span><br><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="attr">port</span> = <span class="number">3306</span></span><br><span class="line"><span class="attr">basedir</span> = C:\\x86\\mysql-<span class="number">8.0</span>.<span class="number">19</span>-winx64</span><br><span class="line"><span class="attr">max_connections</span> = <span class="number">20</span></span><br><span class="line"><span class="attr">character-set-server</span> = utf8</span><br><span class="line"><span class="attr">default-storage-engine</span> = INNODB</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>bin</code>目录下打开命令提示符，执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --initialize --console</span><br></pre></td></tr></table></figure>
+
+<p>控制台将输出 <code>root</code> 用户的默认密码</p>
+<p><img src="/images/JavaEE-01/20200303230408.png" alt="mysqld"></p>
+<p>执行安装并启动服务，记得使用管理员权限运行命令提示符</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysqld install</span><br><span class="line">net start mysql</span><br></pre></td></tr></table></figure>
+
+<p>现在为止 MySQL 就已经安装完成了，你可以将 <code>C:\x86\mysql-8.0.19-winx64\bin</code> 添加到系统变量 <code>PATH</code> 中</p>
+<p>接下来讲讲登录 MySQL 与修改密码</p>
+<p>命令提示符使用以下命令进行登录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/JavaEE-01/20200303231253.png" alt="mysql login"></p>
+<p>设置新密码，以密码 <code>123456</code> 为例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">user</span> <span class="string">'root'</span>@<span class="string">'localhost'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'123456'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>修改后重新登录即可</p>
+<hr>
+<h3 id="创建-Java-EE-项目"><a href="#创建-Java-EE-项目" class="headerlink" title="创建 Java EE 项目"></a>创建 Java EE 项目</h3><p>使用 IntelliJ IDEA 创建项目</p>
+<p>Project SDK 和 Application Server 选择刚刚安装的 JDK 和 Tomcat ，下面选择 Web Application (4.0)</p>
+<p><img src="/images/JavaEE-01/20200303234234.png" alt=""></p>
+<p>然后选择路径，结束，进入主界面</p>
+<p><img src="/images/JavaEE-01/20200303234639.png" alt=""></p>
+<p>我们可以修改一下 <code>index.jsp</code> ，加一点自己的东西进去，用于测试项目是否成功创建</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">"text/html;charset=UTF-8"</span> language=<span class="string">"java"</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;$Title$&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">  &lt;h1&gt; Test Java EE&lt;/h1&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>编译并运行，成功的话会直接弹出浏览器并打开网页</p>
+<p><img src="/images/JavaEE-01/20200303235901.png" alt=""></p>
+<hr>
+<h3 id="连接-MySQL-并测试"><a href="#连接-MySQL-并测试" class="headerlink" title="连接 MySQL 并测试"></a>连接 MySQL 并测试</h3><h4 id="添加-MySQL-Connector-JDBC"><a href="#添加-MySQL-Connector-JDBC" class="headerlink" title="添加 MySQL Connector (JDBC)"></a>添加 MySQL Connector (JDBC)</h4><p>在 <code>WEB-INF</code> 目录下新建两个目录，其中 <code>classes</code> 用于存放编译后的 class 文件，<code>lib</code> 用于存放使用到的 jar 包</p>
+<p>解压在下载 MySQL 时下载的 MySQL Connector，获得一个 jar 包，这里的是 <code>mysql-connector-java-8.0.19.jar</code></p>
+<p>将 jar 包移动到 <code>lib</code> 目录下，并在 IDEA 的 <code>File -&gt; Project Settings -&gt; Libraries</code> 中添加这个包</p>
+<p><img src="/images/JavaEE-01/20200304002846.png" alt=""></p>
+<h4 id="编写代码并测试"><a href="#编写代码并测试" class="headerlink" title="编写代码并测试"></a>编写代码并测试</h4><p>为了方便测试，这里预先在安装的 MySQL 中新建了一个数据库 <code>test</code>，并在其中新建了一个表 <code>t</code> 表仅一个字段 <code>id</code> ，类型为 <code>int</code></p>
+<p>这里直接在 <code>src</code> 目录下新建一个 Java class ，名为 <code>Test</code> ，代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        testMysql();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testMysql</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> String url = <span class="string">"jdbc:mysql://localhost:3306/test?serverTimezone=GMT%2B8"</span>;</span><br><span class="line">        <span class="keyword">final</span> String driverName = <span class="string">"com.mysql.cj.jdbc.Driver"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 加载驱动</span></span><br><span class="line">            Class.forName(driverName);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 创建连接并获取 statement</span></span><br><span class="line">            Connection connection = DriverManager.getConnection(url, <span class="string">"root"</span>, <span class="string">"123456"</span>);</span><br><span class="line">            Statement statement = connection.createStatement();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 插入两个数据</span></span><br><span class="line">            statement.executeUpdate(<span class="string">"INSERT INTO t VALUES (2333)"</span>);</span><br><span class="line">            statement.executeUpdate(<span class="string">"INSERT INTO t VALUES (337845818)"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 查询数据库</span></span><br><span class="line">            <span class="keyword">var</span> resultSet = statement.executeQuery(<span class="string">"SELECT * FROM t"</span>);</span><br><span class="line">            <span class="keyword">while</span> (resultSet.next()) &#123;</span><br><span class="line">                System.out.println(resultSet.getInt(<span class="number">1</span>));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            connection.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2333</span><br><span class="line">337845818</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/JavaEE-01/20200304005238.png" alt=""></p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2020-03-03</span><i class="fa fa-tag"></i><a class="tag" href="/tags/Java-EE/" title="Java EE">Java EE </a></div></div></div></div><div class="share"><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" href="https://twitter.com/intent/tweet?url=https://ry.huaji.store/2020/03/JavaEE-01/&amp;text=Java EE 01：从零开始搭建 Java EE 项目 · 无存在感小透明" target="_blank" rel="noopener"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2020/03/Leetcode-206/" title="Leetcode 206 反转链表">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2020/03/Leetcode-225/" title="Leetcode 225 用队列实现栈">下一篇</a></li></ul></div><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><span class="leancloud_visitors" id="/2020/03/JavaEE-01/" data-flag-title="Java EE 01：从零开始搭建 Java EE 项目"></span><script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av-min.js"></script><script src="//cdn.jsdelivr.net/npm/valine@1.5.3/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  appId:'CV2PYOHXSB2oApmkqHGUKSzj-MdYXbMMI',
+  appKey:'RcyttO7brDSawuxt4FfSUtPM',
+  placeholder:'中国有句古话叫「闷声大发财」，但是见到你们这样热情，一句话不说也不好，你说是吧？',
+  avatar:'identicon',
+  visitor:'true',
+  recordIP:'true',
+  serverURLs:'https://valine.huaji.store',
+  meta:['nick','mail','link'],
+  requiredFields:['nick','mail']
+})
+
+</script></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
