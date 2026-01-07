@@ -2,18 +2,36 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://ry.huaji.store/links/index.html</loc>
+    <loc>https://ry.huaji.store/2025/12/Original-character/</loc>
     
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-07</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://ry.huaji.store/2025/12/Original-character/</loc>
+    <loc>https://ry.huaji.store/2026/01/Chrome-manifest-v2/</loc>
     
-    <lastmod>2025-12-11</lastmod>
+    <lastmod>2026-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://ry.huaji.store/2021/05/RIP-LBH/</loc>
+    
+    <lastmod>2026-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://ry.huaji.store/links/index.html</loc>
+    
+    <lastmod>2026-01-02</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -74,15 +92,6 @@
   </url>
   
   <url>
-    <loc>https://ry.huaji.store/2023/04/Suzume/</loc>
-    
-    <lastmod>2025-08-12</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://ry.huaji.store/2024/02/Summary-2023/</loc>
     
     <lastmod>2025-08-12</lastmod>
@@ -93,6 +102,15 @@
   
   <url>
     <loc>https://ry.huaji.store/2023/06/Sunday/</loc>
+    
+    <lastmod>2025-08-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://ry.huaji.store/2023/04/Suzume/</loc>
     
     <lastmod>2025-08-12</lastmod>
     
@@ -128,6 +146,15 @@
   </url>
   
   <url>
+    <loc>https://ry.huaji.store/2024/06/Second-ride/</loc>
+    
+    <lastmod>2025-08-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ry.huaji.store/2023/04/Some-useful-documents-git-tips/</loc>
     
     <lastmod>2025-08-12</lastmod>
@@ -146,24 +173,6 @@
   </url>
   
   <url>
-    <loc>https://ry.huaji.store/2024/06/Second-ride/</loc>
-    
-    <lastmod>2025-08-12</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ry.huaji.store/2024/04/Oshi-no-ko/</loc>
-    
-    <lastmod>2025-08-12</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://ry.huaji.store/2024/12/Merry-Christmas/</loc>
     
     <lastmod>2025-08-12</lastmod>
@@ -173,7 +182,7 @@
   </url>
   
   <url>
-    <loc>https://ry.huaji.store/2025/05/RIP-LBH/</loc>
+    <loc>https://ry.huaji.store/2024/04/Oshi-no-ko/</loc>
     
     <lastmod>2025-08-12</lastmod>
     
@@ -236,7 +245,7 @@
   </url>
   
   <url>
-    <loc>https://ry.huaji.store/2020/03/Leetcode-365/</loc>
+    <loc>https://ry.huaji.store/2020/05/Leetcode-50/</loc>
     
     <lastmod>2025-08-12</lastmod>
     
@@ -245,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://ry.huaji.store/2020/05/Leetcode-50/</loc>
+    <loc>https://ry.huaji.store/2020/03/Leetcode-365/</loc>
     
     <lastmod>2025-08-12</lastmod>
     
@@ -308,6 +317,15 @@
   </url>
   
   <url>
+    <loc>https://ry.huaji.store/2024/11/ChiliChill-2024/</loc>
+    
+    <lastmod>2025-08-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ry.huaji.store/2023/07/ChiliChill-2023/</loc>
     
     <lastmod>2025-08-12</lastmod>
@@ -318,15 +336,6 @@
   
   <url>
     <loc>https://ry.huaji.store/2024/08/Dear-shing/</loc>
-    
-    <lastmod>2025-08-12</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ry.huaji.store/2024/11/ChiliChill-2024/</loc>
     
     <lastmod>2025-08-12</lastmod>
     
@@ -346,106 +355,113 @@
 
   <url>
     <loc>https://ry.huaji.store/</loc>
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>https://ry.huaji.store/tags/%E6%97%A5%E5%B8%B8/</loc>
-    <lastmod>2026-01-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://ry.huaji.store/tags/Live/</loc>
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ry.huaji.store/tags/Vocaloid/</loc>
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ry.huaji.store/tags/%E9%9F%B3%E4%B9%90/</loc>
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ry.huaji.store/tags/%E6%97%A5%E5%B8%B8/</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ry.huaji.store/tags/Chrome/</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ry.huaji.store/tags/Browser-Extensions/</loc>
+    <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ry.huaji.store/tags/Java-EE/</loc>
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ry.huaji.store/tags/Leetcode/</loc>
-    <lastmod>2026-01-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ry.huaji.store/tags/%E7%BB%98%E7%94%BB/</loc>
-    <lastmod>2026-01-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ry.huaji.store/tags/OC-Original-Character/</loc>
-    <lastmod>2026-01-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ry.huaji.store/tags/%E8%87%AA%E8%AE%BE/</loc>
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ry.huaji.store/tags/Linux/</loc>
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ry.huaji.store/tags/%E7%BB%98%E7%94%BB/</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ry.huaji.store/tags/%E8%87%AA%E8%AE%BE/</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://ry.huaji.store/tags/R-I-P/</loc>
+    <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ry.huaji.store/tags/%E5%8A%A8%E7%94%BB/</loc>
-    <lastmod>2026-01-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://ry.huaji.store/tags/RIP/</loc>
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ry.huaji.store/tags/Some-Useful-Documents/</loc>
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ry.huaji.store/tags/%E5%A4%8F%E6%97%A5%E8%8A%B1%E7%81%AB/</loc>
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

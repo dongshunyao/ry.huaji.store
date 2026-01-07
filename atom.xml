@@ -6,7 +6,7 @@
   <link href="https://ry.huaji.store/atom.xml" rel="self"/>
   
   <link href="https://ry.huaji.store/"/>
-  <updated>2025-12-11T10:17:36.756Z</updated>
+  <updated>2026-01-07T15:13:59.438Z</updated>
   <id>https://ry.huaji.store/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>启用 Chrome 浏览器中被停用的不再受支持的 Manifest V2 Extensions</title>
+    <link href="https://ry.huaji.store/2026/01/Chrome-manifest-v2/"/>
+    <id>https://ry.huaji.store/2026/01/Chrome-manifest-v2/</id>
+    <published>2026-01-07T14:00:00.000Z</published>
+    <updated>2026-01-07T15:13:59.438Z</updated>
+    
+    <content type="html"><![CDATA[<p>Google 在七八年前就搞出来了 <a href="https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3?hl=zh-cn" target="_blank" rel="noopener">Manifest V3</a> 这个浏览器扩展程序的新标准，旨在加强扩展程序的隐私保护、安全性和性能。不过由于大家的一致反对，整个迁移过程一直拖到去年才尘埃落地。谷歌已于 <a href="https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline?hl=zh-cn" target="_blank" rel="noopener">2025 年 7 月 24 日在所有位置停用 Manifest V2</a>。</p><p>诚然，新的标准确实带来了不少好处，而且现在看 Google 也并不是因为顾及其钱袋子而搞骚操作。但客观而言我的 Chrome 浏览器中仍有不少实用但已停止维护的扩展，找来找去也没有最佳替代方案，还是看看怎么让 Chrome 继续使用 Manifest V2 的扩展程序吧。</p><p>总体来说最简单的方案其实是改用 Microsoft Edge 浏览器，迁移过程也十分方便，毕竟它现在也是基于 Chromium 开发的（有点怀念当年的使用 EdgeHTML + Chakra 的旧版 Microsoft Edge 了）。不过这几年微软可是越来越魔幻以至于魔怔了，我还是继续 Chrome 吧，实在是有点害怕QAQ</p><p>好在如今我们还是有方法解决这个问题的，目前看来这个方法会一直有效，应该是 Google 是故意留下来的。方法其实很简单，就是<strong>给 Chrome 加启动参数</strong>。之前折腾过好多办法，现在看来还得是这个，核心就是在 Chrome 启动时传入参数开启 Manifest V2 支持：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--<span class="built_in">disable</span>-features=ExtensionManifestV2Unsupported,ExtensionManifestV2Disabled</span><br></pre></td></tr></table></figure><hr><h3 id="Windows-用户"><a href="#Windows-用户" class="headerlink" title="Windows 用户"></a>Windows 用户</h3><p>Windows 用户请<code>鼠标右键 -&gt; 新建 -&gt; 快捷方式</code>并填入：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"C:\Program Files\Google\Chrome\Application\chrome.exe"</span> -<span class="literal">-disable</span><span class="literal">-features</span>=ExtensionManifestV2Unsupported,ExtensionManifestV2Disabled</span><br></pre></td></tr></table></figure><p>如果 <code>Chrome.exe</code> 不在 <code>&quot;C:\Program Files\Google\Chrome\Application\chrome.exe&quot;</code>，请修改为实际的安装地址，记得<strong>保留现有的双引号</strong>。</p><p>对于已有的 Chrome 快捷方式，直接修改<code>鼠标右键 -&gt; 属性 -&gt; 目标</code>即可。</p><hr><h3 id="MacOS-用户"><a href="#MacOS-用户" class="headerlink" title="MacOS 用户"></a>MacOS 用户</h3><p>MacOS 用户请先<strong>完全退出</strong> Chrome 后，在<code>启动台</code>中找到<code>终端</code>，打开并输入执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open -b com.google.Chrome --new --args --<span class="built_in">disable</span>-features=ExtensionManifestV2Unsupported,ExtensionManifestV2Disabled</span><br></pre></td></tr></table></figure><p>这会打开一个全新的 Chrome 进程，之后就可以退出<code>终端</code>了。</p><p>当然也可以使用<code>启动台</code>中的<code>自动操作</code>或者<code>脚本编辑器</code>去创建快捷方式，不过 MacOS 中 Chrome 一般是常驻后台的，而且也不经常关机或重启，这里就不对此方法过多展开了。</p>]]></content>
+    
+    
+    <summary type="html">继续使用旧版本的浏览器扩展程序！适用于 Chrome 143.0.7499.193 及过往版本</summary>
+    
+    
+    
+    
+    <category term="Chrome" scheme="https://ry.huaji.store/tags/Chrome/"/>
+    
+    <category term="Browser Extensions" scheme="https://ry.huaji.store/tags/Browser-Extensions/"/>
+    
+  </entry>
+  
+  <entry>
     <title>NEW · It is me!</title>
     <link href="https://ry.huaji.store/2025/12/Original-character/"/>
     <id>https://ry.huaji.store/2025/12/Original-character/</id>
     <published>2025-12-08T04:00:00.000Z</published>
-    <updated>2025-12-11T10:17:36.756Z</updated>
+    <updated>2026-01-07T15:15:58.242Z</updated>
     
     <content type="html"><![CDATA[<p>我是垚！</p><p>这是我的全新立绘！既是 OC (Original Character) 也是自设！</p><p>感谢 Ayako 的倾情创作！画师本人也有出镜哟！</p><p><img src="/images/Original-character/20251208120000.png" alt=""></p>]]></content>
     
@@ -33,28 +54,7 @@
     
     <category term="绘画" scheme="https://ry.huaji.store/tags/%E7%BB%98%E7%94%BB/"/>
     
-    <category term="OC (Original Character)" scheme="https://ry.huaji.store/tags/OC-Original-Character/"/>
-    
     <category term="自设" scheme="https://ry.huaji.store/tags/%E8%87%AA%E8%AE%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>曾经沧海难为水 除却巫山不是云</title>
-    <link href="https://ry.huaji.store/2025/05/RIP-LBH/"/>
-    <id>https://ry.huaji.store/2025/05/RIP-LBH/</id>
-    <published>2025-05-13T18:42:40.000Z</published>
-    <updated>2025-08-12T15:20:28.727Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="2025"><a href="#2025" class="headerlink" title="2025"></a>2025</h3><blockquote><p><strong>夢醒時分</strong><br>陳淑樺<br><em>跟你說聽你說</em></p></blockquote><p><audio controls src="/media/dream_to_awakening.mp3"></audio></p><hr><h3 id="2024"><a href="#2024" class="headerlink" title="2024"></a>2024</h3><blockquote><p><strong>你曾是少年</strong><br>S.H.E<br><em>Wings of My Words</em></p></blockquote><p><audio controls src="/media/wings_of_my_words.mp3"></audio></p><hr><h3 id="2023"><a href="#2023" class="headerlink" title="2023"></a>2023</h3><blockquote><p><strong>Stay Alive</strong><br>José González<br><em>The Secret Life Of Walter Mitty</em></p></blockquote><p><audio controls src="/media/stay_alive.mp3"></audio></p><hr><h3 id="2022"><a href="#2022" class="headerlink" title="2022"></a>2022</h3><blockquote><p><strong>See You Again (feat. Charlie Puth)</strong><br>Wiz Khalifa<br><em>Furious 7</em></p></blockquote><p><audio controls src="/media/see_you_again.mp3"></audio></p><hr><h3 id="2021"><a href="#2021" class="headerlink" title="2021"></a>2021</h3><p>1997.5.20 - 2021.5.14</p>]]></content>
-    
-    
-    <summary type="html">。</summary>
-    
-    
-    
-    
-    <category term="RIP" scheme="https://ry.huaji.store/tags/RIP/"/>
     
   </entry>
   
@@ -92,13 +92,13 @@
     
     
     
-    <category term="日常" scheme="https://ry.huaji.store/tags/%E6%97%A5%E5%B8%B8/"/>
-    
     <category term="Live" scheme="https://ry.huaji.store/tags/Live/"/>
     
     <category term="Vocaloid" scheme="https://ry.huaji.store/tags/Vocaloid/"/>
     
     <category term="音乐" scheme="https://ry.huaji.store/tags/%E9%9F%B3%E4%B9%90/"/>
+    
+    <category term="日常" scheme="https://ry.huaji.store/tags/%E6%97%A5%E5%B8%B8/"/>
     
   </entry>
   
@@ -432,6 +432,25 @@
     
     
     <category term="夏日花火" scheme="https://ry.huaji.store/tags/%E5%A4%8F%E6%97%A5%E8%8A%B1%E7%81%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>曾经沧海难为水 除却巫山不是云</title>
+    <link href="https://ry.huaji.store/2021/05/RIP-LBH/"/>
+    <id>https://ry.huaji.store/2021/05/RIP-LBH/</id>
+    <published>2021-05-13T18:42:40.000Z</published>
+    <updated>2026-01-07T14:04:57.453Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p><strong>1997.5.20 - 2021.5.14</strong></p></blockquote><hr><blockquote><p><strong>See You Again (feat. Charlie Puth)</strong><br>Wiz Khalifa<br><em>Furious 7</em></p></blockquote><p><audio controls src="/media/see_you_again.mp3"></audio></p><hr><blockquote><p><strong>Stay Alive</strong><br>José González<br><em>The Secret Life Of Walter Mitty</em></p></blockquote><p><audio controls src="/media/stay_alive.mp3"></audio></p><hr><blockquote><p><strong>你曾是少年</strong><br>S.H.E<br><em>Wings of My Words</em></p></blockquote><p><audio controls src="/media/wings_of_my_words.mp3"></audio></p><hr><blockquote><p><strong>夢醒時分</strong><br>陳淑樺<br><em>跟你說聽你說</em></p></blockquote><p><audio controls src="/media/dream_to_awakening.mp3"></audio></p>]]></content>
+    
+    
+    <summary type="html">。</summary>
+    
+    
+    
+    
+    <category term="R.I.P." scheme="https://ry.huaji.store/tags/R-I-P/"/>
     
   </entry>
   
