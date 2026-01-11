@@ -92,13 +92,13 @@
     
     
     
+    <category term="日常" scheme="https://ry.huaji.store/tags/%E6%97%A5%E5%B8%B8/"/>
+    
     <category term="Live" scheme="https://ry.huaji.store/tags/Live/"/>
     
     <category term="Vocaloid" scheme="https://ry.huaji.store/tags/Vocaloid/"/>
     
     <category term="音乐" scheme="https://ry.huaji.store/tags/%E9%9F%B3%E4%B9%90/"/>
-    
-    <category term="日常" scheme="https://ry.huaji.store/tags/%E6%97%A5%E5%B8%B8/"/>
     
   </entry>
   
@@ -800,8 +800,4 @@
     
   </entry>
   
-  <follow_challenge>
-    <feedId>90422965914175488</feedId>
-    <userId>69722014333191168</userId>
-  </follow_challenge>
 </feed>
